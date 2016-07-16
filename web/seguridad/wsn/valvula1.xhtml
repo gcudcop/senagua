@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="tituloNavegador">
+                Adminstración Válvula uno
+            </ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">
+                CONTROL NODO UNO
+            </ui:define>
+            <ui:define name="contenido">
+                <p:growl autoUpdate="true" showDetail="true"/>
+                <h:form id="frmTablaNodo1">
+                    <p:dataTable id="tblTablaNodo1"  value="#{nodo1Controlador2.lstNodo1}" var="nodo1" 
+                                 rowKey="#{nodo1.id}" selectionMode="single" selection="#{nodo1Controlador.nodo1Sel}">
+                        
+                            
+                                <p:column width="600">
+                                    <h:outputLabel value="ESTADO VÁLVULA:  "/>
+                                    <h:outputText value="#{nodo1.estado_valvula}" escape="false" />       
+                                </p:column>
+
+                                <p:column width="600">
+                                    <h:outputLabel value="MODO:  "/>
+                                    <h:outputText value="#{nodo1.modo}" escape="false"/>
+                                </p:column>
+                              
+                      
+
+                        <f:facet name="footer">
+
+                            <p:commandButton value="ENCENDER" onclick="dlgEncender.show();"  
+                                             update=":frmEncender:displayEncender"   />
+                            <p:commandButton value="APAGAR" onclick="dlgApagar.show();" 
+                                             update=":frmApagar:displayApagar"/>
+                            <p:commandButton value="AUTOMÁTICO" onclick="dlgAutomatico.show();" 
+                                             update=":frmAutomatico:displayAutomatico"/>
+                           <!-- <p:commandButton value="MANUAL" onclick="dlgManual.show();" 
+                                             update=":frmManual:displayManual"/>-->
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+            <ui:define name="dialogos" >
+               <h:form id="frmEncender" >
+                    <p:dialog widgetVar="dlgEncender" header="Encender Válvula" modal="true" height="150" width="300" >
+                        <p:panel id="displayEncender" >
+                            <p:panelGrid columns="1" >
+
+                                <p:outputLabel value="Desea Encender la Válvula ?"/>
+                                <p:outputLabel onclick="#{nodo1Controlador.comando1}" />
+
+                                
+                                <p:panelGrid columns="2" style="text-align: center;">
+                                    <p:commandButton value="Aceptar" action="#{nodo1Controlador.encender}"
+                                                     update=":frmTablaNodo1:tblTablaNodo1"/>
+                                    <p:commandButton value="Cancelar" onclick="dlgEncender.hide();"/>
+                                    
+                                </p:panelGrid>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="frmApagar">
+                    <p:dialog widgetVar="dlgApagar" header="Apagar Válvula" modal="true" height="150" width="300" >
+                        <p:panel id="displayApagar" >
+                            <p:panelGrid columns="1" >
+
+                                <p:outputLabel value="Desea Apagar la Válvula ?"/>
+                                <p:outputLabel onclick="#{nodo1Controlador.comando2}" />
+
+                                
+                                <p:panelGrid columns="2" style="text-align: center;">
+                                    <p:commandButton value="Aceptar" action="#{nodo1Controlador.apagar()}"
+                                                     update=":frmTablaNodo1:tblTablaNodo1"/>
+                                    <p:commandButton value="Cancelar" onclick="dlgApagar.hide();"/>
+                                </p:panelGrid>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="frmAutomatico">
+                    <p:dialog widgetVar="dlgAutomatico" header=" Válvula Automática" modal="true" height="150" width="400" >
+                        <p:panel id="displayAutomatico" >
+                            <p:panelGrid columns="1" >
+
+                                <p:outputLabel value="Desea pasar la Válvula al modo Automático?"/>
+                                <p:outputLabel onclick="#{nodo1Controlador.comando5}" />
+
+                                
+                                <p:panelGrid columns="2" style="text-align: center;">
+                                    <p:commandButton value="Aceptar" action="#{nodo1Controlador.automatico()}"
+                                                     update=":frmTablaNodo1:tblTablaNodo1"/>
+                                    <p:commandButton value="Cancelar" onclick="dlgAutomatico.hide();"/>
+                                    
+                                </p:panelGrid>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="frmManual">
+                    <p:dialog widgetVar="dlgManual" header=" Válvula Manual" modal="true" height="150" width="400" >
+                        <p:panel id="displayManual" >
+                            <p:panelGrid columns="1" >
+
+                                <p:outputLabel value="Desea pasar la Válvula al modo Manual?"/>
+                                <p:outputLabel onclick="#{nodo1Controlador.comando5}" />
+
+                                
+                                <p:panelGrid columns="2" style="text-align: center;">
+                                    <p:commandButton value="Aceptar" action="#{nodo1Controlador.manual()}"
+                                                     update=":frmTablaNodo1:tblTablaNodo1"/>
+                                    <p:commandButton value="Cancelar" onclick="dlgManual.hide();"/>
+                                    
+                                </p:panelGrid>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

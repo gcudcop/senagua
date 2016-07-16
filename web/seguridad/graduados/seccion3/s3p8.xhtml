@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="Datos">Sección 3: Pregunta 8</ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../../templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">Sección 3: Pregunta 8</ui:define>
+            <ui:define name="contenido">
+                <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
+                <h:form id="frmdatos" style="alignment-adjust: central">
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+
+                    <p:panel id="pnlGraficos" header="Comprender la práctica profesional y asuntos de responsabilidad ética relacionados con" >
+
+                        <p:accordionPanel style="max-height: 800px;max-width: 1200px">
+
+                            <p:tab title="Contratación de trabajos" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineModelLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineModelLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineModelLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineModelLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>      
+                            
+                             <p:tab title="Ofertas versus Calidad" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralBLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralBLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralBLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralBLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralBLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralBLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>
+                            
+                            <p:tab title="Importancia de ser Miembro de un Colegio ó sociedad Profesional" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralCLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralCLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralCLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralCLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralCLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralCLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>
+                            
+                             <p:tab title="Importancia de Tener Educación Continua" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralDLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralDLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralDLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralDLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralDLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralDLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>
+                            
+                            <p:tab title="Otros Asuntos Profesionales, Sociales y Morales" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralELadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P8LA.pieLiteralELadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralELadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P8LA.lineLiteralELadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralELadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P8LA.lineLiteralELadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>
+                            
+                        </p:accordionPanel>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="dialogos">
+                <p:dialog modal="true" widgetVar="dlgStatus" header="Procesando" draggable="false" closable="false" 
+                          resizable="false"> 
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

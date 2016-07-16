@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="Datos">Seccion 4: Pregunta 4</ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../../templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">Sección 2: Pregunta 5</ui:define>
+            <ui:define name="contenido">
+                <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
+                <h:form id="frmdatos" style="alignment-adjust: central">
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+
+                    <p:panel id="pnlGraficos" header="Satisfacción con el Nivel de Exigencia de los Profesores de la Carrera:" >
+
+                        <p:accordionPanel style="max-height: 800px;max-width: 1200px">
+                            <p:tab title="Gráfica en pastel" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <p:pieChart   value="#{ctrlSeccionCuatroPreguntaCuatro.pieModel}" showDataLabels="true" legendPosition="e" 
+                                              title="Satisfacción con el Nivel de Exigencia de los Profesores de la Carrera:" style="height:320px;width:950px;text-decoration-style: dashed"/>  
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                            </p:tab>
+                            <p:tab title="Gráfico de Barras" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <p:barChart   value="#{ctrlSeccionCuatroPreguntaCuatro.lineModel}"  
+                                              title="Satisfacción con el Nivel de Exigencia de los Profesores de la Carrera:" style="height:320px;width:950px;text-decoration-style: dashed"
+                                              xaxisLabel="Grado de Satisfacción" xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                            </p:tab>
+                            
+                            <p:tab title="Series" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <p:lineChart   value="#{ctrlSeccionCuatroPreguntaCuatro.lineModel}" 
+                                              title="Satisfacción con el Nivel de Exigencia de los Profesores de la Carrera:" style="height:320px;width:950px;text-decoration-style: dashed"
+                                              xaxisLabel="Grado de Satisfacción" xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                            </p:tab>
+                            
+                        </p:accordionPanel>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="dialogos">
+                <p:dialog modal="true" widgetVar="dlgStatus" header="Procesando" draggable="false" closable="false" 
+                          resizable="false"> 
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

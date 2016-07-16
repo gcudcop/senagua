@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="Datos">Sección 3: Pregunta 7</ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../../templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">Sección 3: Pregunta 7</ui:define>
+            <ui:define name="contenido">
+                <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
+                <h:form id="frmdatos" style="alignment-adjust: central">
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+
+                    <p:panel id="pnlGraficos" header="Habilidades" >
+
+                        <p:accordionPanel style="max-height: 800px;max-width: 1200px">
+
+                            <p:tab title="Capacidad para Identificar problemas en Ingeniería Electrónica y Telecomunicaciones" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P7LA.pieLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P7LA.pieLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P7LA.lineModelLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P7LA.lineModelLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P7LA.lineModelLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P7LA.lineModelLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>    
+                            
+                            <p:tab title="Puede formular problemas en Ingeniería Electrónica y Telecomunicaciones" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P7LB.pieLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P7LB.pieLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P7LB.lineModelLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P7LB.lineModelLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P7LB.lineModelLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P7LB.lineModelLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>    
+                            
+                            <p:tab title="Puede Resolver problemas en Ingeniería Electrónica y Telecomunicaciones" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                                <p:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlS3P7LC.pieLadoA}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado A" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:pieChart   value="#{ctrlS3P7LC.pieLadoB}" legendPosition="e" showDataLabels="true"
+                                                  title="Lado B" style="height:300px;width:475px;text-decoration-style: dashed"/>  
+                                    <p:barChart   value="#{ctrlS3P7LC.lineModelLadoA}"  
+                                                  title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:barChart   value="#{ctrlS3P7LC.lineModelLadoB}" 
+                                                  title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                  xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/> 
+                                    <p:lineChart   value="#{ctrlS3P7LC.lineModelLadoA}"  
+                                                   title="Lado A" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                    <p:lineChart   value="#{ctrlS3P7LC.lineModelLadoB}" 
+                                                   title="Lado B" style="height:350px;width:475px;text-decoration-style: dashed"
+                                                   xaxisAngle="90" yaxisLabel="# Graduados" animate="true"/>  
+                                </p:panelGrid>
+                            </p:tab>    
+                            
+                        </p:accordionPanel>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="dialogos">
+                <p:dialog modal="true" widgetVar="dlgStatus" header="Procesando" draggable="false" closable="false" 
+                          resizable="false"> 
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

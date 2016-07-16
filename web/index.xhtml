@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/plantillaBase.xhtml">
+        <ui:define name="tituloNavegador">Seguimiento de graduados</ui:define>
+        <ui:define name="content">
+            <h:form id="frmIndex">
+                <p:panel>
+                    <h:panelGrid columns="2" cellspacing="2" cellpadding="10">
+                        <p:graphicImage value="/resources/images/logo_e3.png"/>      
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:panel>
+                                <h:panelGrid columns="2">
+                                    <p:graphicImage value="/resources/images/mision.jpg"/>                             
+                                    <p>
+                                        La Escuela de Ingeniería en Electrónica y Telecomunicaciones forma profesionales críticos de excelencia 
+                                        académica que desarrollan soluciones integrales e innovadoras en la planificación, diseño,adaptación y 
+                                        operación de sistemas electrónicos y tele comunicaciones fundamentadas en la ciencia y tecnología con 
+                                        valores humanísticos
+                                    </p>
+                                </h:panelGrid>  
+                            </p:panel>
+                            <p:panel>
+                                <h:panelGrid columns="2">                            
+                                    <p:graphicImage value="/resources/images/vision.jpg"/>
+                                    <p>
+                                        Posicionarse en el ámbito local y nacional como una carrera líder en el área de al ingeniería y 
+                                        telecomunicaciones, en un cumplimiento con el plan nacional de desarrollo.
+                                    </p> 
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>           
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="Graduado">Gestión de Graduados</ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../../templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">Perspectiva Laboral</ui:define>
+            <ui:define name="contenido">
+                <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
+                <h:form id="frmSeccionDos">
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                    <p:panel id="pnlSeccionDos">
+                        <p:dataTable id="tblDatos" value="#{ctrlPerspecitvaLaboral.lstSeccionDos}" var="datos"
+                                     paginator="true" rows="15" selectionMode="single" rowKey="#{datos.codigo}">
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Graduado"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.graduado.nombres} #{datos.graduado.apellidos}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Fecha de la encuesta"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.fecha}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="¿Se encuentra laborando?"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p1}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Trabaja para:"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p2}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Nombre empresa"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p3}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Ubicación"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p4}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Aréa de la empresa"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p5}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Modalidad de trabajo"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p6}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Remuneración"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p7}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="¿Ha solicitado empleo?"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p8}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Número de entrevistas"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p9}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Número de ofertas de trabajo"/>
+                                </f:facet>
+                                <p:outputLabel value="#{datos.s2p10}"/>
+                            </p:column>
+                            
+                             <p:column exportable="false">                               
+                                 <p:commandButton id="btnDetalles" icon="ui-icon-plus"  title="Detalles"
+                                                  update=":dlgDetalles" oncomplete="wdlgDetalles.show()">
+                                     <f:setPropertyActionListener value="#{datos}" target="#{ctrlPerspecitvaLaboral.detalles}"/>
+                                 </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">  
+                                <h:commandLink>
+                                    <img src="../../../resources/images/excel.png" alt=""/>
+                                    <p:dataExporter type="xls" target="tblDatos" fileName="Datos" pageOnly="true" />
+                                </h:commandLink>
+                                <h:commandLink>
+                                    <img src="../../../resources/images/pdf.png" alt=""/>
+                                    <p:dataExporter type="pdf" target="tblDatos" fileName="Datos" pageOnly="true" />
+                                </h:commandLink>
+                                <h:commandLink>
+                                    <img src="../../../resources/images/csv.png" alt=""/>
+                                    <p:dataExporter type="csv" target="tblDatos" fileName="Datos" pageOnly="true" />
+                                </h:commandLink>
+                                <h:commandLink>
+                                    <img src="../../../resources/images/xml.png" alt=""/>
+                                    <p:dataExporter type="xml" target="tblDatos" fileName="Datos" pageOnly="true" />
+                                </h:commandLink>
+                            </f:facet>
+                        </p:dataTable>
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+            <ui:define name="dialogos">
+                
+                 <p:dialog id="dlgDetalles" header="Detalles" widgetVar="wdlgDetalles" modal="true" closable="false" 
+                          resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmVerUsuario">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:panelGrid id="pngVerUsuario" columns="2">
+                            <p:outputLabel value="Graduado:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.graduado.apellidos} #{ctrlPerspecitvaLaboral.detalles.graduado.nombres}"/>
+                            <p:outputLabel value="Fecha de la encuesta:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.fecha}"/>
+                            <p:outputLabel value="¿Se encuentra laborando?"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p1}"/>
+                            <p:outputLabel value="TRabaja para:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p2}"/>
+                            <p:outputLabel value="Nombre de la empresa:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p3}"/>
+                            <p:outputLabel value="Ubicación de la empresa:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p4}"/>
+                            <p:outputLabel value="Actividad principal de la empresa:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p5}"/>
+                            <p:outputLabel value="Trabaja a:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p6}"/>
+                            <p:outputLabel value="Salario mensual:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p7}"/>
+                            <p:outputLabel value="¿Ha solicitado empleo?"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p8}"/>
+                            <p:outputLabel value="¿Número de entrevistas?"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p9}"/>
+                             <p:outputLabel value="¿Número de ofertas de trabajo?"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p10}"/>
+                            <p:outputLabel value="¿Cuantas realizó?"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p11}"/>
+                            <p:outputLabel value="Si no ha solicitado empleo, especifique el motivo:"/>
+                            <p:outputLabel value="#{ctrlPerspecitvaLaboral.detalles.s2p12}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" onclick="wdlgDetalles.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+
+                <p:dialog modal="true" widgetVar="dlgStatus" header="Procesando" draggable="false" closable="false" 
+                          resizable="false"> 
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

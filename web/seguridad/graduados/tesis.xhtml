@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="Datos">Estadística por tiempo de desarrollo de tesis</ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">Tesis</ui:define>
+            <ui:define name="contenido">
+                <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
+                <h:form id="frmdatos" style="alignment-adjust: central">
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+
+                    <p:panel id="pnlGraficos" header="Tesis" >
+
+                        <p:accordionPanel style="max-height: 800px;max-width: 1200px">
+                             <p:tab title="¿Quién lo vinculó con su proyecto de graduación?" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <h:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlTiempoTesis.pieVinculoTesis}" legendPosition="e" showDataLabels="true"
+                                              style="height:350px;width:450px;text-decoration-style: dashed"/>                                     
+                                    <p:barChart   value="#{ctrlTiempoTesis.lineVinculoTesis}"
+                                              style="height:350px;width:450px;text-decoration-style: dashed"
+                                              xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                </h:panelGrid>                                
+                            </p:tab>    
+                            <p:tab title="Tiempo en desarrollar el proyecto de graduación" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <h:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlTiempoTesis.pieModel}" legendPosition="e" showDataLabels="true"
+                                              style="height:350px;width:450px;text-decoration-style: dashed"/>                                     
+                                    <p:barChart   value="#{ctrlTiempoTesis.lineModel}"
+                                              style="height:350px;width:450px;text-decoration-style: dashed"
+                                              xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                </h:panelGrid>                                
+                            </p:tab>  
+                             <p:tab title="Quién auspició su proyecto de graduación" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <h:panelGrid columns="2">
+                                    <p:pieChart   value="#{ctrlTiempoTesis.pieAuspicioTesis}" legendPosition="e" showDataLabels="true"
+                                              style="height:350px;width:450px;text-decoration-style: dashed"/>                                     
+                                    <p:barChart   value="#{ctrlTiempoTesis.lineAuspicioTesis}"
+                                              style="height:350px;width:450px;text-decoration-style: dashed"
+                                              xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                </h:panelGrid>                                
+                            </p:tab>  
+                        </p:accordionPanel>
+                        
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="dialogos">
+                <p:dialog modal="true" widgetVar="dlgStatus" header="Procesando" draggable="false" closable="false" 
+                          resizable="false"> 
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
