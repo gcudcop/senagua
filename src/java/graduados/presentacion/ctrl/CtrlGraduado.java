@@ -90,6 +90,25 @@ public class CtrlGraduado {
         }
 
     }
+    
+    public void editarGraduado() {
+        try {
+             graduadoSel.setFechaNacimiento(StringToDate.devolverFecha(fechaNacimiento));
+            if (ServiciosGraduados.actualizarGraduado(graduadoSel)) {
+                this.init();
+                DefaultRequestContext.getCurrentInstance().execute("wdlgEditarGraduado.hide()");
+                Util.addSuccessMessage("Información eliminada.");
+                System.out.println("public void eliminarGraduado() dice: Información Actualizada.");
+            } else {
+                Util.addErrorMessage("Error al eliminar la información.");
+                System.out.println("public void eliminarGraduado() dice: Error al actualizar la información");
+            }
+        } catch (Exception e) {
+            Util.addErrorMessage("public void eliminarGraduado() dice: " + e.getMessage());
+            System.out.println("public void eliminarGraduado() dice: " + e.getMessage());
+        }
+
+    }
 
     /*
      *** getters y setters

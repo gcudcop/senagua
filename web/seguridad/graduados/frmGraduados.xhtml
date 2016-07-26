@@ -19,7 +19,8 @@
                     <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                     <p:panel id="pnlGraduado">
                         <p:dataTable id="tblGraduado" value="#{ctrlGraduado.lstGraduados}" var="graduado"
-                                     paginator="true" rows="15" selectionMode="single" rowKey="#{graduado.codigo}">
+                                     paginator="true" rows="15" selectionMode="single" rowKey="#{graduado.codigo}"
+                                     selection="#{ctrlGraduado.graduadoSel}">
                             <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Nombres"/>
@@ -73,7 +74,10 @@
                                 <f:facet name="header">
                                     <p:outputLabel value="Acciones"/>
                                 </f:facet>
-                                <p:commandButton id="btnEditarGraduado" icon="ui-icon-pencil"  title="Editar Graduado"/>
+                                <p:commandButton id="btnEditarGraduado" icon="ui-icon-pencil"  title="Editar Graduado" 
+                                                 oncomplete="wdlgEditarGraduado.show()" update=":dlgEditarGraduado" process="@this">
+                                    <f:setPropertyActionListener value="#{graduado}" target="#{ctrlGraduado.graduadoSel}"/>
+                                </p:commandButton>
                                 <p:commandButton id="btnEliminarGraduado" icon="ui-icon-close"  title="Eliminar Graduado"
                                                  oncomplete="wdlgEliminarGraduado.show()" update=":dlgEliminarGraduado">
                                     <f:setPropertyActionListener value="#{graduado}" target="#{ctrlGraduado.graduadoSel}"/>
@@ -127,18 +131,17 @@
                             <p:outputLabel id="otxtFechaNacimiento" for="german" value="Fecha de Nacimiento:"/>
                             <p:calendar id="german" value="#{ctrlGraduado.fechaNacimiento}" locale="en" navigator="true" pattern="dd-MM-yyyy" required="true"/>
                             <p:outputLabel value="Género: " id="otxtGenero" for="cmbGenero"/>
-                            <p:selectOneMenu id="cmbGenero" value="#{ctrlGraduado.genero}">
+                            <p:selectOneMenu id="cmbGenero" value="#{ctrlGraduado.genero}" required="true">
                                 <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
                                 <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
                                 <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
                             </p:selectOneMenu>
-                            <p:outputLabel value="Estado Civil" id="otxtEstadoCivil"/>
-                            <p:selectOneMenu id="cmbEstadoCivil" value="#{ctrlGraduado.estadoCivil}">
+                            <p:outputLabel value="Estado Civil" id="otxtEstadoCivil" for="cmbEstadoCivil"/>
+                            <p:selectOneMenu id="cmbEstadoCivil" value="#{ctrlGraduado.estadoCivil}" required="true">
                                 <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
                                 <f:selectItem itemLabel="Soltero(a)" itemValue="Soltero(a)" />
                                 <f:selectItem itemLabel="Casado(a)" itemValue="Casado(a)" />
-                                <f:selectItem itemLabel="Divorciado(a)" itemValue="Divorciado(a)" />
-                                <f:selectItem itemLabel="Viudo(a)" itemValue="Viudo(a)" />
+                                <f:selectItem itemLabel="Divorciado(a)" itemValue="Divorciado(a)" />                                
                                 <f:selectItem itemLabel="Viudo(a)" itemValue="Viudo(a)" />
                                 <f:selectItem itemLabel="Unido(a)" itemValue="Unido(a)" />
                                 <f:selectItem itemLabel="Separado(a)" itemValue="Separado(a)" />
@@ -175,10 +178,51 @@
                     <h:form id="frmEditarGraduado">
                         <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                         <p:messages id="messages" autoUpdate="true"/>  
-                        <p:panelGrid id="pngEditarGraduado" columns="2">
-                            <p:outputLabel value="Nombres: "/>
+                        <p:panelGrid id="pngEditarGraduado" columns="4">
+                            <p:outputLabel value="Nombres: " id="otxtNombres" for="txtNombres"/>
+                            <p:inputText value="#{ctrlGraduado.graduadoSel.nombres}" id="txtNombres" required="true" placeholder="Ej. Andrés Felipe"/>
+                            <p:outputLabel value="Apellidos: " id="otxtApellidos" for="txtApellidos"/>
+                            <p:inputText value="#{ctrlGraduado.graduadoSel.apellidos}" id="txtApellidos" required="true" placeholder="Ej. Contero Ramos"/>
+                            <p:outputLabel id="otxtCedula" for="txtCedula" value="Cédula de Ciudadanía:"/>
+                            <p:inputText id="txtCedula" value="#{ctrlGraduado.graduadoSel.cedula}" required="true" placeholder="Ej. 0603977224"/>
+                            <p:outputLabel id="otxtFechaNacimiento" for="german" value="Fecha de Nacimiento:"/>
+                            <p:calendar id="german" value="#{ctrlGraduado.fechaNacimiento}" locale="en" navigator="true" pattern="dd-MM-yyyy" required="true"/>
+                            <p:outputLabel value="Género: " id="otxtGenero" for="cmbGenero"/>
+                            <p:selectOneMenu id="cmbGenero" value="#{ctrlGraduado.graduadoSel.genero}" required="true">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Estado Civil" id="otxtEstadoCivil" for="cmbEstadoCivil"/>
+                            <p:selectOneMenu id="cmbEstadoCivil" value="#{ctrlGraduado.graduadoSel.estadoCivil}" required="true">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                <f:selectItem itemLabel="Soltero(a)" itemValue="Soltero(a)" />
+                                <f:selectItem itemLabel="Casado(a)" itemValue="Casado(a)" />
+                                <f:selectItem itemLabel="Divorciado(a)" itemValue="Divorciado(a)" />                                
+                                <f:selectItem itemLabel="Viudo(a)" itemValue="Viudo(a)" />
+                                <f:selectItem itemLabel="Unido(a)" itemValue="Unido(a)" />
+                                <f:selectItem itemLabel="Separado(a)" itemValue="Separado(a)" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Dirección domiciliaria: " id="otxtDireccionDomiciliaria" for="txtDireccionDomiciliaria"/>
+                            <p:inputTextarea id="txtDireccionDomiciliaria" value="#{ctrlGraduado.graduadoSel.direccionDomiciliaria}" required="true" placeholder="Ej. Avda. 11 de Noviembre y José María Sáenz"/>
+                            <p:outputLabel value="Teléfono" id="otxtTelefono" for="txtTelefono"/>
+                            <p:inputText value="#{ctrlGraduado.graduadoSel.telefono}" required="true" id="txtTelefono" placeholder="Ej. 032318236"/>
+                            <p:outputLabel value="Celular" id="otxtCelular" for="txtCelular"/>
+                            <p:inputText value="#{ctrlGraduado.graduadoSel.celular}" required="true" id="txtCelular" placeholder="Ej. 0988998362"/>
+                            <p:outputLabel id="otxtEmailPrincipal" value="Correo eletrónico principal: " for="txtEmailPrincipal"/>
+                            <p:inputText id="txtEmailPrincipal" value="#{ctrlGraduado.graduadoSel.emailPrincipal}" required="true" placeholder="Ej. acontero@unach.edu.ec"/>
+                            <p:outputLabel id="otxtEmailAlterno" value="Correo eletrónico alterno: " for="txtEmailAlterno"/>
+                            <p:inputText id="txtEmailAlterno" value="#{ctrlGraduado.graduadoSel.emailAlterno}" required="true" placeholder="Ej. acontero@yahoo.com"/>
+
+                            <p:outputLabel value="Dirección domiciliaria padres: " id="otxtDireccionDomiciliariaPadres" for="txtDireccionDomiciliariaPadres"/>
+                            <p:inputTextarea id="txtDireccionDomiciliariaPadres" value="#{ctrlGraduado.graduadoSel.direccionPadres}" required="true" placeholder="Ej. Avda. 11 de Noviembre y José María Sáenz"/>
+                            <p:outputLabel value="Teléfono de los padres" id="otxtTelefonoPadres" for="txtTelefonoPadres"/>
+                            <p:inputText value="#{ctrlGraduado.graduadoSel.telefonoPadres}" required="true" id="txtTelefonoPadres" placeholder="Ej. 032318236"/>
+
+                            <p:outputLabel value="Contraseña: " id="otxtContrasenia" for="txtContrasenia"/>
+                            <p:inputText value="#{ctrlGraduado.graduadoSel.contrasenia}" id="txtContrasenia" required="true" />
                         </p:panelGrid>
-                        <p:commandButton value="Aceptar" action="#{estudianteControlador.actualizarEstudiante()}" 
+                        <p:commandButton value="Aceptar" action="#{ctrlGraduado.editarGraduado()}" 
                                          update=":frmGraduado:pnlGraduado"/>
                         <p:commandButton value="Cancelar" onclick="wdlgEditarGraduado.hide()" type="reset"/>
                     </h:form> 
