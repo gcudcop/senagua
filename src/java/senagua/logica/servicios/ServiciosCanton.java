@@ -24,11 +24,11 @@ public class ServiciosCanton {
         try {
             while (rs.next()) {
                 c = new Canton(
-                        rs.getInt("ccodigo_canton"),
-                        ServiciosProvincia.obtenerProvinciaDadoCodigo(rs.getInt("ccodigo_provincia")),
-                        rs.getString("cnombre_canton"),
-                        rs.getString("cobservaciones"),
-                        rs.getDouble("cpoblacion")                        
+                        rs.getInt("pcodigo_canton"),
+                        ServiciosProvincia.obtenerProvinciaDadoCodigo(rs.getInt("pcodigo_provincia")),
+                        rs.getString("pnombre_canton"),
+                        rs.getString("pobservaciones"),
+                        rs.getDouble("ppoblacion")                        
                 );
                 lst.add(c);
             }
