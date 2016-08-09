@@ -18,20 +18,50 @@
                 <h:form id="frmGraduado">
                     <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                     <p:panel id="pnlGraduado">
-                        <p:dataTable id="tblGraduado" value="#{ctrlJAguaPotable.listJuntas}" var="juntas"
-                                     paginator="true" rows="15" selectionMode="single" rowKey="#{juntas.codigo}"
-                                     selection="#{ctrlJAguaPotable.juntaSel}">
+                        <p:dataTable id="tblGraduado" value="#{controladorDirigente.listDirigentes}" var="dirigente"
+                                     paginator="true" rows="15" selectionMode="single" rowKey="#{dirigente.codigoDirigente}"
+                                     selection="#{controladorDirigente.dirigenteSel}">
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="Nombre"/>
+                                    <p:outputLabel value="Cedula"/>
                                 </f:facet>
-                                <p:outputLabel value="#{juntas.nombreJunta}"/>
+                                <p:outputLabel value="#{dirigente.cedula}"/>
                             </p:column>         
                               <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="estado"/>
+                                    <p:outputLabel value="Nombres"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{juntas.estado}"/>
+                                  <p:outputLabel value="#{dirigente.nombres}"/>
+                            </p:column>   
+                              <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Apellidos"/>
+                                </f:facet>
+                                  <p:outputLabel value="#{dirigente.apellidos}"/>
+                            </p:column>   
+                              <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Fecha de Nacimiento"/>
+                                </f:facet>
+                                  <p:outputLabel value="#{dirigente.fecha_de_nacimiento}"/>
+                            </p:column>   
+                             <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Genero"/>
+                                </f:facet>
+                                 <p:outputLabel value="#{dirigente.genero}"/>
+                            </p:column>   
+                              <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Fecha de Ingreso"/>
+                                </f:facet>
+                                  <p:outputLabel value="#{dirigente.fecha_ingreso}"/>
+                            </p:column>   
+                             <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Observaciones"/>
+                                </f:facet>
+                                 <p:outputLabel value="#{dirigente.observaciones}"/>
                             </p:column>   
 
                             <f:facet name="footer">                                  
@@ -71,4 +101,5 @@
         </ui:composition>
     </h:body>
 </html>
+
 
