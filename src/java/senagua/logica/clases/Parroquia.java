@@ -67,5 +67,4 @@ public class Parroquia {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-
 }

@@ -11,6 +11,7 @@ import accesodatos.Parametro;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import senagua.logica.clases.Canton;
+import static senagua.logica.servicios.ServiciosCanton.llenarDatos;
 
 /**
  *
@@ -40,7 +41,7 @@ public class ServiciosCanton {
     }
      
      
-     public static ArrayList<Canton> obtenerProvincias() throws Exception {
+     public static ArrayList<Canton> obtenerCanton() throws Exception {
         ArrayList<Canton> lst = new ArrayList<Canton>();
         try {
             String sql = "select * from senagua.f_select_canton()";

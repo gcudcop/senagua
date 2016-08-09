@@ -18,20 +18,26 @@
                 <h:form id="frmGraduado">
                     <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                     <p:panel id="pnlGraduado">
-                        <p:dataTable id="tblGraduado" value="#{ctrlJAguaPotable.listJuntas}" var="juntas"
-                                     paginator="true" rows="15" selectionMode="single" rowKey="#{juntas.codigo}"
-                                     selection="#{ctrlJAguaPotable.juntaSel}">
+                        <p:dataTable id="tblGraduado" value="#{controladorParroquia.listParroquia}" var="parroquia"
+                                     paginator="true" rows="15" selectionMode="single" rowKey="#{parroquia}"
+                                     selection="#{controladorParroquia.parroquiaSel}">
                             <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Nombre"/>
                                 </f:facet>
-                                <p:outputLabel value="#{juntas.nombreJunta}"/>
+                                <p:outputLabel value="#{provincia.nombreProvincia}"/>
                             </p:column>         
                               <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="estado"/>
+                                    <p:outputLabel value="Población"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{juntas.estado}"/>
+                                  <p:outputLabel value="#{provincia.poblacion}"/>
+                            </p:column>   
+                              <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Observaciones"/>
+                                </f:facet>
+                                  <p:outputLabel value="#{provincia.observaciones}"/>
                             </p:column>   
 
                             <f:facet name="footer">                                  
@@ -71,4 +77,3 @@
         </ui:composition>
     </h:body>
 </html>
-

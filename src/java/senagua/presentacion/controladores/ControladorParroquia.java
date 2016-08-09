@@ -12,64 +12,59 @@ import recursos.Util;
 import senagua.logica.clases.Parroquia;
 import senagua.logica.servicios.ServiciosParroquia;
 
-/**
- *
- * @author Enrique
- */
 @ManagedBean
 @ViewScoped
 public class ControladorParroquia {
-    
-  private ArrayList<Parroquia> listParroquias;
+    private ArrayList<Parroquia> listParroquia;
     private Parroquia parroquia;
     private Parroquia parroquiaSel;
-    public ControladorParroquia() {
+
+ 
+    public ControladorParroquia(){
         this.init();
     }
 
     private void init() {
         this.parroquia = new Parroquia();
         this.parroquiaSel = new Parroquia();
-        this.listParroquias = new ArrayList<Parroquia>();
+        this.listParroquia = new ArrayList<Parroquia>();
         this.obtenerParroquia();
     }
 
-    public void obtenerParroquia() {
+    public void obtenerParroquia(){
         try {
-            this.listParroquias= ServiciosParroquia.obtenerParroquia();
+            this.listParroquia = ServiciosParroquia.obtenerParroquia();
         } catch (Exception e) {
             Util.addErrorMessage("public void obtenerParroquia() dice: " + e.getMessage());
             System.out.println("public void obtenerParroquia() dice: " + e.getMessage());
         }
     }
 
-
-    public void setListParroquias(ArrayList<Parroquia> listParroquias) {
-        this.listParroquias = listParroquias;
+    public ArrayList<Parroquia> getListParroquia() {
+        return listParroquia;
     }
 
-    public void setParroquia(Parroquia parroquia) {
-        this.parroquia = parroquia;
-    }
-
-    /*
-    getters y setters
-     */
-    public void setParroquiaSel(Parroquia parroquiaSel) {
-        this.parroquiaSel = parroquiaSel;
-    }
-
-    public ArrayList<Parroquia> getListParroquias() {
-        return listParroquias;
+    public void setListParroquia(ArrayList<Parroquia> listParroquia) {
+        this.listParroquia = listParroquia;
     }
 
     public Parroquia getParroquia() {
         return parroquia;
     }
 
+    public void setParroquia(Parroquia parroquia) {
+        this.parroquia = parroquia;
+    }
+
     public Parroquia getParroquiaSel() {
         return parroquiaSel;
     }
+
+    public void setParroquiaSel(Parroquia parroquiaSel) {
+        this.parroquiaSel = parroquiaSel;
+    }
+
+    
 
     
 }
