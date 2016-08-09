@@ -57,7 +57,7 @@ public class ServiciosJAguaPotable {
     public static ArrayList<JAguaPotable> obtenerJuntas() throws Exception {
         ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
         try {
-            String sql = "select * from senagua.f_select_junta_agua_potable()";
+            String sql = "select * from senagua.f_select_junta_agua_potable2()";
             ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql);
             lst = llenarDatos(rs);
             rs = null;
