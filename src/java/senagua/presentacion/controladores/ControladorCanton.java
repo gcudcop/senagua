@@ -41,7 +41,7 @@ public class ControladorCanton {
         this.listCantones = new ArrayList<Canton>();
         this.listProvincia = new ArrayList<Provincia>();
         this.obtenerCanton();
-        this.obtnerProvincias();
+        this.obtenerProvincia();
     }
 
     public void obtenerCanton() {
@@ -53,13 +53,13 @@ public class ControladorCanton {
         }
     }
 
-    public void obtnerProvincias() {
+    public void obtenerProvincia() {
         try {
             this.listProvincia = ServiciosProvincia.obtenerProvincias();
-            System.out.println("prueba obtener provincia" + listProvincia.get(0).getNombreProvincia());
+            //System.out.println("prueba obtener provincia" + listProvincia.get(0).getNombreProvincia());
         } catch (Exception e) {
-            Util.addErrorMessage("public void obtenerProvincias() dice: " + e.getMessage());
-            System.out.println("public void obtenerProvincias() dice: " + e.getMessage());
+            Util.addErrorMessage("public void obtenerProvincia() dice: " + e.getMessage());
+            System.out.println("public void obtenerProvincia() dice: " + e.getMessage());
         }
     }
 
@@ -69,8 +69,10 @@ public class ControladorCanton {
             p.setCodigoProvincia(codigoProvincia);
             canton.setCodigoProvincia(p);
             //FUsuario.Insertar(usuario, persona.getCodigo_persona());
-            if (ServiciosCanton.insertarCanton(canton) == 1) {
+            if (ServiciosCanton.insertarCanton(canton)==1) {
+                this.init();
                 canton = new Canton();
+                codigoProvincia=0;
                 DefaultRequestContext.getCurrentInstance().execute("wdlgNuevoCanton.hide()");
                 Util.addSuccessMessage("Datos Insertados");
                 this.obtenerCanton();
@@ -82,6 +84,46 @@ public class ControladorCanton {
             Util.addErrorMessage("public void insertarCanton() dice: " + e.getMessage());
             System.out.println("public void insertarCanton() dice: " + e.getMessage());
         }
+    }
+    public void editarCanton(){      
+         try {
+             Provincia p = new Provincia();
+            p.setCodigoProvincia(codigoProvincia);
+            cantonSel.setCodigoProvincia(p);
+             if (ServiciosCanton.actualizarCanton(cantonSel)) {
+                this.init();
+                cantonSel=new Canton();
+                codigoProvincia=0;
+                DefaultRequestContext.getCurrentInstance().execute("wdlgEditarCanton.hide()");
+                Util.addSuccessMessage("Información guardada con éxito");
+                System.out.println("public void EditarCanton() dice: Error al guardar la información");
+            } else {
+                Util.addSuccessMessage("Error al guardar la información");
+                System.out.println("public void EditarCanton() dice: Error al guardar la información");
+            }
+         } catch (Exception e) {
+             Util.addErrorMessage("public void EditarCanton() dice: " + e.getMessage());
+            System.out.println("public void EditarCanton() dice: " + e.getMessage());
+         }
+     }
+    
+    public void eliminarCanton() {
+        try {
+            //if (ServiciosGraduados.eliminarGraduado((int) graduadoSel.getCodigo())) {
+            if(ServiciosCanton.eliminarCanton((int)cantonSel.getCodigoCanton())){
+                this.init();
+                DefaultRequestContext.getCurrentInstance().execute("wdlgEliminarCanton.hide()");
+                Util.addSuccessMessage("Información eliminada.");
+                System.out.println("public void eliminarCanton() dice: Información eliminada.");
+            } else {
+                Util.addErrorMessage("Error al eliminar la información.");
+                System.out.println("public void eliminarCanton() dice: Error al eliminar la información");
+            }
+        } catch (Exception e) {
+            Util.addErrorMessage("public void eliminarCanton() dice: " + e.getMessage());
+            System.out.println("public void eliminarCanton() dice: " + e.getMessage());
+        }
+
     }
 
     public ArrayList<Canton> getListCantones() {
@@ -108,20 +150,19 @@ public class ControladorCanton {
         this.cantonSel = cantonSel;
     }
 
+    public int getCodigoProvincia() {
+        return codigoProvincia;
+    }
+    
+     public void setCodigoProvincia(int codigoProvincia) {
+        this.codigoProvincia = codigoProvincia;
+    }
     public ArrayList<Provincia> getListProvincia() {
         return listProvincia;
     }
 
     public void setListProvincia(ArrayList<Provincia> listProvincia) {
         this.listProvincia = listProvincia;
-    }
-
-    public int getCodigoProvincia() {
-        return codigoProvincia;
-    }
-
-    public void setCodigoProvincia(int codigoProvincia) {
-        this.codigoProvincia = codigoProvincia;
     }
 
 }

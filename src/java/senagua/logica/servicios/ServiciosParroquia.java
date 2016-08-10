@@ -90,7 +90,6 @@ public class ServiciosParroquia {
         try {
             ArrayList<Parametro> lstP = new ArrayList<Parametro>();
             String sql = "select * from senagua.f_insert_parroquia(?,?,?,?)";
-
             lstP.add(new Parametro(1, p.getCodigoCanton().getCodigoCanton()));
             lstP.add(new Parametro(2, p.getNombre()));
             lstP.add(new Parametro(3, p.getPoblacion()));
@@ -127,6 +126,5 @@ public class ServiciosParroquia {
             throw new Exception(exConec.getMessage());
         }
         return band;
-    }
-    
+    } 
 }

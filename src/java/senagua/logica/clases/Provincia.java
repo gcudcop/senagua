@@ -16,6 +16,16 @@ public class Provincia {
     private Double poblacion;
     private String observaciones;
 
+    public Provincia() {
+    }
+
+    public Provincia(int codigoProvincia, String nombreProvincia, Double poblacion, String observaciones) {
+        this.codigoProvincia = codigoProvincia;
+        this.nombreProvincia = nombreProvincia;
+        this.poblacion = poblacion;
+        this.observaciones = observaciones;
+    }
+    
     public int getCodigoProvincia() {
         return codigoProvincia;
     }
@@ -47,15 +57,4 @@ public class Provincia {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-
-    public Provincia() {
-    }
-
-    public Provincia(int codigoProvincia, String nombreProvincia, Double poblacion, String observaciones) {
-        this.codigoProvincia = codigoProvincia;
-        this.nombreProvincia = nombreProvincia;
-        this.poblacion = poblacion;
-        this.observaciones = observaciones;
-    }
-
 }

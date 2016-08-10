@@ -141,11 +141,13 @@
                         <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                         <p:messages id="messages" autoUpdate="true"/>  
                         <p:panelGrid id="pngEditarGraduado" columns="4">
-                           <p:outputLabel value="Cantón" />
+                           
+                            <p:outputLabel value="Cantón" />
                             <p:selectOneMenu value="#{controladorParroquia.codigoCanton}">
                                 <f:selectItem itemLabel="Seleccione..." itemValue="" />
                                 <f:selectItems value="#{controladorParroquia.listCanton}" var="canton" itemLabel="#{canton.nombre}" itemValue="#{canton.codigoCanton}" />
                             </p:selectOneMenu>
+                            
                             <p:outputLabel value="Nombre" id="otxtCanton" for="txtCanton"/>
                             <p:inputText value="#{controladorParroquia.parroquiaSel.nombre}" id="txtCanton" required="true" placeholder="Ej. Lizarzaburu"/>
                             <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>

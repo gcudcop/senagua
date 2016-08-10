@@ -46,15 +46,20 @@
                                 <p:outputLabel value="#{canton.observaciones}"/>
                             </p:column>   
                             
-                            <p:column exportable="false">
-                                 <f:facet name="header">
+                           <p:column exportable="false">
+                                <f:facet name="header">
                                     <p:outputLabel value="Acciones"/>
                                 </f:facet>
-                                <p:commandButton id="btnEditarCanton" icon="ui-icon-pencil"  title="Editar Canton" >                                   
+                                 <p:commandButton id="btnEditarCanton" icon="ui-icon-pencil"  title="Editar Canton" 
+                                                 oncomplete="wdlgEditarCanton.show()" update=":dlgEditarCanton" process="@this">
+                                     <f:setPropertyActionListener value="#{canton}" target="#{controladorCanton.cantonSel}"/>
                                 </p:commandButton>
-                                <p:commandButton id="btnEliminarCanton" icon="ui-icon-close"  title="Eliminar Canton">                                    
+                                
+                                <p:commandButton id="btnEliminarCanton" icon="ui-icon-close"  title="Eliminar Canton"
+                                                 oncomplete="wdlgEliminarCanton.show()" update=":dlgEliminarCanton">
+                                    <f:setPropertyActionListener value="#{canton}" target="#{controladorCanton.cantonSel}"/>
                                 </p:commandButton>
-                            </p:column>
+                            </p:column> 
 
                             <f:facet name="footer">   
 
@@ -113,12 +118,55 @@
                             <p:inputText value="#{controladorCanton.canton.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Cantón nuevo"/>
                         </p:panelGrid>
 
-
                         <p:commandButton value="Aceptar" action="#{controladorCanton.insertarCanton()}" 
                                          update="@form"/>
                         <p:commandButton value="Cancelar" onclick="wdlgNuevoCanton.hide()" type="reset"/>
                     </h:form> 
-                </p:dialog>  
+                     </p:dialog> 
+                    <p:dialog id="dlgEliminarCanton" header="Eliminar Provincia" widgetVar="wdlgEliminarCanton" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEliminarProvincia">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <h:outputText value="¿Desea Eliminar el Canton?"/>
+                        <p:panelGrid id="pngEliminarCanton" columns="2">
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText value="#{controladorCanton.cantonSel.nombre}" title="ej: Riobamba" 
+                                         required="true" requiredMessage="Ingrese el nombre" disabled="true"/>                            
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorCanton.eliminarCanton()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEliminarCanton.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+                    
+                    <p:dialog id="dlgEditarCanton" header="Editar Canton" widgetVar="wdlgEditarCanton" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEditarCanton">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:messages id="messages" autoUpdate="true"/>  
+                        <p:panelGrid id="pngEditarCanton" columns="4">
+                           
+                            <p:outputLabel value="Provincia" />
+                            <p:selectOneMenu value="#{controladorCanton.codigoProvincia}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                <f:selectItems value="#{controladorCanton.listProvincia}" var="provincia" itemLabel="#{provincia.nombreProvincia}" itemValue="#{provincia.codigoProvincia}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Nombre" id="otxtCanton" for="txtCanton"/>
+                            <p:inputText value="#{controladorCanton.cantonSel.nombre}" id="txtCanton" required="true" placeholder="Ej. Riobamba"/>
+                            <p:outputLabel value="Observaciones" id="otxtObservaciones" for="txtObservaciones"/>
+                            <p:inputText value="#{controladorCanton.cantonSel.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Canton nuevo"/>
+                            <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>
+                            <p:inputText id="txtPoblacion" required="true" value="#{controladorCanton.cantonSel.poblacion}" placeholder="Ej. 120000"/>
+                                                                                                                                           
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorCanton.editarCanton()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEditarCanton.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+                    
+                
             </ui:define>
         </ui:composition>
     </h:body>

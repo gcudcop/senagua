@@ -7,12 +7,12 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>
-            <ui:define name="Graduado">Gestión de Graduados</ui:define>
+            <ui:define name="Graduado">Secretaria del Agua</ui:define>
         </title>
     </h:head>
     <h:body>
         <ui:composition template="../../templates/plantillaInternaCenter.xhtml">
-            <ui:define name="top">Gestión de Graduados</ui:define>
+            <ui:define name="top">Secretaria del Agua</ui:define>
             <ui:define name="contenido">
                 <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
                 <h:form id="frmGraduado">
@@ -39,8 +39,27 @@
                                 </f:facet>
                                   <p:outputLabel value="#{provincia.observaciones}"/>
                             </p:column>   
+                            
+                             <p:column exportable="false">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Acciones"/>
+                                </f:facet>
+                                 <p:commandButton id="btnEditarProvincia" icon="ui-icon-pencil"  title="Editar Provincia" 
+                                                 oncomplete="wdlgEditarProvincia.show()" update=":dlgEditarProvincia" process="@this">
+                                     <f:setPropertyActionListener value="#{provincia}" target="#{controladorProvincia.provinciaSel}"/>
+                                </p:commandButton>
+                                
+                                <p:commandButton id="btnEliminarProvincia" icon="ui-icon-close"  title="Eliminar Provincia"
+                                                 oncomplete="wdlgEliminarProvincia.show()" update=":dlgEliminarProvincia">
+                                    <f:setPropertyActionListener value="#{provincia}" target="#{controladorProvincia.provinciaSel}"/>
+                                </p:commandButton>
+                            </p:column>                           
 
-                            <f:facet name="footer">                                  
+                            <f:facet name="footer">  
+
+                                <p:commandButton id="btnNuevaProvincia" value="Nuevo" icon="ui-icon-newwin"
+                                                 oncomplete="wdlgNuevaProvincia.show()" title="Nueva Provincia"/>
+                                
                                 <h:commandLink>
                                     <img src="../../resources/images/excel.png" alt=""/>
                                     <p:dataExporter type="xls" target="tblGraduado" fileName="Graduado" pageOnly="true" />
@@ -73,6 +92,63 @@
                           resizable="false"> 
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
                 </p:dialog>
+                
+                <p:dialog id="dlgNuevaProvincia" header="Nueva Provincia" widgetVar="wdlgNuevaProvincia" 
+                          modal="true" closable="false" resizable="false"
+                          showEffect="clip" hideEffect="fold"> 
+                    <h:form id="frmNuevaProvincia">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:panelGrid columns="2">
+                            
+                            <p:outputLabel value="Nombre" id="otxtProvincias" for="txtNombre"/>
+                            <p:inputText value="#{controladorProvincia.provincia.nombreProvincia}" id="txtNombre" required="true" placeholder="Ej. Chimborazo"/>
+                            <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>
+                            <p:inputText id="txtPoblacion" required="true" value="#{controladorProvincia.provincia.poblacion}" placeholder="Ej. 120000"/>
+                            <p:outputLabel value="Observaciones" id="otxtObservaciones" for="txtObservaciones"/>
+                            <p:inputText value="#{controladorProvincia.provincia.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Provincia nueva"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorProvincia.insertarProvincia()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgNuevaProvincia.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>  
+                
+                <p:dialog id="dlgEliminarProvincia" header="Eliminar Provincia" widgetVar="wdlgEliminarProvincia" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEliminarProvincia">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <h:outputText value="¿Desea Eliminar la Provincia?"/>
+                        <p:panelGrid id="pngEliminarProvincia" columns="2">
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText value="#{controladorProvincia.provinciaSel.nombreProvincia}" title="ej: Chimborazo" 
+                                         required="true" requiredMessage="Ingrese el nombre" disabled="true"/>                            
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorProvincia.eliminarProvincia()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEliminarProvincia.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+                
+                <p:dialog id="dlgEditarProvincia" header="Editar Provincia" widgetVar="wdlgEditarProvincia" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEditarProvincia">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:messages id="messages" autoUpdate="true"/>  
+                        <p:panelGrid id="pngEditarProvincia" columns="4">
+                           
+                            <p:outputLabel value="Nombre" id="otxtCanton" for="txtProvincia"/>
+                            <p:inputText value="#{controladorProvincia.provinciaSel.nombreProvincia}" id="txtProvincia" required="true" placeholder="Ej. Chimborazo"/>
+                            <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>
+                            <p:inputText id="txtPoblacion" required="true" value="#{controladorProvincia.provinciaSel.poblacion}" placeholder="Ej. 120000"/>
+                            <p:outputLabel value="Observaciones" id="otxtObservaciones" for="txtObservaciones"/>
+                            <p:inputText value="#{controladorProvincia.provinciaSel.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Provincia nuevo"/>                                                                                                               
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorProvincia.editarProvincia()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEditarProvincia.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+                
             </ui:define>
         </ui:composition>
     </h:body>
