@@ -3,38 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package graduados.presentacion.colegiatura.ctrl;
+package senagua.presentacion.controladores;
 
-import graduados.logica.entidades.Colegiatura;
-import graduados.logica.servicios.ServiciosColegiatura;
-import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
+import senagua.logica.servicios.ServiciosJAguaPotable;
+import senagua.logica.clases.JAguaPotable;
 
 /**
  *
- * @author Geovanny
+ * @author Enrique
  */
-@ManagedBean
-@ViewScoped
-public class CtrlTiempoCarrera implements Serializable {
-
-    private CartesianChartModel lineModel;
+public class ControladorJAguaPotableEstado {
+    
+  private CartesianChartModel lineModel;
     private PieChartModel pieModel;
-    private ArrayList<Colegiatura> lst;
+    private ArrayList<JAguaPotable> lst;
 
-    public CtrlTiempoCarrera() {
+    public ControladorJAguaPotableEstado() {
         this.init();
     }
 
     private void init() {
-        this.lst = new ArrayList<Colegiatura>();
+        this.lst = new ArrayList<JAguaPotable>();
         this.graficar();
     }
 
@@ -47,11 +42,11 @@ public class CtrlTiempoCarrera implements Serializable {
     private CartesianChartModel grafica() {
         CartesianChartModel model = new CartesianChartModel();
         try {
-            lst = ServiciosColegiatura.obtenerColegiaturaTiempoCarrera();
+            lst = ServiciosJAguaPotable.obtenerjunta_agua_potableEstado();
             ChartSeries test = new ChartSeries();
             for (int i = 0; i < lst.size(); i++) {
-                test.set(String.valueOf(ServiciosColegiatura.obtenerColegiaturaTiempoCarrera().get(i).getTiempoCarrera())+" Años",
-                        ServiciosColegiatura.obtenerColegiaturaDadoTiempoCarrera (ServiciosColegiatura.obtenerColegiaturaTiempoCarrera().get(i).getTiempoCarrera()).size());
+                test.set(String.valueOf(ServiciosJAguaPotable.obtenerjunta_agua_potableEstado().get(i).getEstado())+" ESTADO",
+                       ServiciosJAguaPotable.obtene(ServiciosColegiatura.obtenerColegiaturaTiempoCarrera().get(i).getTiempoCarrera()).size());
 
             }
             model.addSeries(test);
@@ -64,10 +59,10 @@ public class CtrlTiempoCarrera implements Serializable {
     private void createPieModel() {
         pieModel = new PieChartModel();
         try {
-            lst = ServiciosColegiatura.obtenerColegiaturaTiempoCarrera();
+            lst = ServiciosJAguaPotable.obtenerjunta_agua_potableEstado();
             for (int i = 0; i < lst.size(); i++) {
-                pieModel.set(String.valueOf(ServiciosColegiatura.obtenerColegiaturaTiempoCarrera().get(i).getTiempoCarrera())+" Años",
-                        ServiciosColegiatura.obtenerColegiaturaDadoTiempoCarrera(ServiciosColegiatura.obtenerColegiaturaTiempoCarrera().get(i).getTiempoCarrera()).size());
+                pieModel.set(String.valueOf(ServiciosJAguaPotable.obtenerjunta_agua_potableEstado().get(i).getEstado())+" ESTADO",
+                        ServiciosJAguaPotable.obtenerjunta_agua_potableEstado(ServiciosJAguaPotable.obtenerjunta_agua_potableEstado().get(i).getEstado()).size());
 
             }
         } catch (Exception e) {
@@ -102,3 +97,4 @@ public class CtrlTiempoCarrera implements Serializable {
     }
 
 }
+

@@ -157,7 +157,53 @@ public class ServiciosJAguaPotable {
         }
         return band;
     }
+        public static ArrayList<JAguaPotable> obtenerjunta_agua_potableEstado() throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {                          
+            String sql = "select * from senagua.f_select_junta_agua_potable_estado_estadisticas()";
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (SQLException exConec) {
+            throw new Exception(exConec.getMessage());
+        }
+        return lst;
+    }
 
+    public static Object obtenerjunta_agua_potableEstado(String estado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoProvincia(int codigo) throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_junta_dado_provinciainnerjoin(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
+    
+     public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoCanton(int codigo) throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_junta_dado_parroquia(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
     
     
 }

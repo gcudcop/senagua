@@ -115,7 +115,7 @@ public class ServiciosColegiatura {
     
     public static ArrayList<Colegiatura> obtenerColegiaturaTiempoCarrera() throws Exception {
         ArrayList<Colegiatura> lst = new ArrayList<Colegiatura>();
-        try {
+        try {                          
             String sql = "select * from graduados.f_select_colegiatura_tiempo_carrera()";
             ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql);
             lst = llenarDatos(rs);
