@@ -15,10 +15,10 @@
             <ui:define name="top">Gestión de Graduados</ui:define>
             <ui:define name="contenido">
                 <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
-                <h:form id="frmGraduado">
+                <h:form id="frmDirigente">
                     <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
-                    <p:panel id="pnlGraduado">
-                        <p:dataTable id="tblGraduado" value="#{controladorDirigente.listDirigentes}" var="dirigente"
+                    <p:panel id="pnlDirigente">
+                        <p:dataTable id="tblDirigente" value="#{controladorDirigente.listDirigentes}" var="dirigente"
                                      paginator="true" rows="15" selectionMode="single" rowKey="#{dirigente.codigoDirigente}"
                                      selection="#{controladorDirigente.dirigenteSel}">
                             <p:column>
@@ -64,7 +64,25 @@
                                  <p:outputLabel value="#{dirigente.observaciones}"/>
                             </p:column>   
 
-                            <f:facet name="footer">                                  
+                                  <p:column exportable="false">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Acciones"/>
+                                </f:facet>
+                                 <p:commandButton id="btnEditarDirigente" icon="ui-icon-pencil"  title="Editar Dirigente" 
+                                                 oncomplete="wdlgEditarDirigente.show()" update=":dlgEditarDirigente" process="@this">
+                                     <f:setPropertyActionListener value="#{dirigente}" target="#{controladorDirigente.dirigenteSel}"/>
+                                </p:commandButton>
+                                
+                                <p:commandButton id="btnEliminarDirigente" icon="ui-icon-close"  title="Eliminar Dirigente"
+                                                 oncomplete="wdlgEliminarDirigente.show()" update=":dlgEliminarDirigente">
+                                    <f:setPropertyActionListener value="#{dirigente}" target="#{controladorDirigente.dirigenteSel}"/>
+                                </p:commandButton>
+                            </p:column>
+                            
+                           
+                            <f:facet name="footer">    
+                                  <p:commandButton id="btnNuevaDirigente" value="Nuevo" icon="ui-icon-newwin"
+                                                 oncomplete="wdlgNuevaDirigente.show()" title="Nuevo Dirigente"/>  
                                 <h:commandLink>
                                     <img src="../../resources/images/excel.png" alt=""/>
                                     <p:dataExporter type="xls" target="tblGraduado" fileName="Graduado" pageOnly="true" />
@@ -97,9 +115,97 @@
                           resizable="false"> 
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
                 </p:dialog>
+                
+                 <p:dialog id="dlgNuevaDirigente" header="Nuevo Dirigente" widgetVar="wdlgNuevaDirigente" 
+                          modal="true" closable="false" resizable="false"
+                          showEffect="clip" hideEffect="fold"> 
+                    <h:form id="frmNuevaDirigente">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:panelGrid columns="4">
+                  
+                            <p:outputLabel value="Cedula" id="otxtDirigente" for="txtDirigente"/>
+                            <p:inputText value="#{controladorDirigente.dirigente.cedula}" id="txtDirigente" required="true" placeholder="Ej. 0604792549"/>
+                           
+                            <p:outputLabel id="otxtNombre" for="txtNombre" value="Nombre"/>
+                            <p:inputText id="txtNombre" required="true" value="#{controladorDirigente.dirigente.nombres}" placeholder="Ej. Edwin"/>
+                            
+                            <p:outputLabel value="Apellido" id="otxtApellido" for="txtApellido"/>
+                            <p:inputText value="#{controladorDirigente.dirigente.apellidos}" id="txtApellido" required="true" placeholder="Ej.Maigua Moyota"/>
+                       
+                            <p:outputLabel id="otxtfechadenacimiento" for="txtfechadenacimiento" value="fechadenacimiento"/>
+                            <p:inputText id="txtfechadenacimiento" required="true" value="#{controladorDirigente.dirigente.fecha_de_nacimiento}" placeholder="Ej. 1/12/1992"/>
+                           
+                            <p:outputLabel id="otxtgenero" for="txtgenero" value="Genero"/>
+                            <p:inputText id="txtgenero" required="true" value="#{controladorDirigente.dirigente.genero}" placeholder="Ej. M"/>
+                            
+                            <p:outputLabel id="otxtfechaingreso" for="txtfechaingreso" value="FechaIngreso"/>
+                            <p:inputText id="txtfechaingreso" required="true" value="#{controladorDirigente.dirigente.fecha_ingreso}" placeholder="Ej. 1/12/2016"/>
+                            
+                            <p:outputLabel id="otxtobservaciones" for="txtobservaciones" value="observaciones"/>
+                            <p:inputText id="txtobservaciones" required="true" value="#{controladorDirigente.dirigente.observaciones}" placeholder="Ej. TEXTO"/>
+                            
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorDirigente.insertarDirigente()}" 
+                                         update=":frmDirigente:pnlDirigente"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgNuevaDirigente.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>  
+
+                <p:dialog id="dlgEliminarDirigente" header="Eliminar Dirigente" widgetVar="wdlgEliminarDirigente" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEliminarDirigente">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <h:outputText value="¿Desea Eliminar el Dirigente?"/>
+                        <p:panelGrid id="pngEliminarDirigente" columns="2">
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText value="#{controladorDirigente.dirigenteSel.nombres}" title="ej: Sandra" 
+                                         required="true" requiredMessage="Ingrese el nombre" disabled="true"/>                            
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorDirigente.eliminarDirigente()}" 
+                                         update=":frmDirigente:pnlDirigente"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEliminarDirigente.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+                
+                
+                <p:dialog id="dlgEditarDirigente" header="Editar Dirigente" widgetVar="wdlgEditarDirigente" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEditarDirigente">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:messages id="messages" autoUpdate="true"/>  
+                        <p:panelGrid id="pngEditarDirigente" columns="4">
+                            
+                            
+                              <p:outputLabel value="Cedula" id="otxtDirigente" for="txtDirigente"/>
+                              <p:inputText value="#{controladorDirigente.dirigenteSel.cedula}" id="txtDirigente" required="true" placeholder="Ej. 0604792549"/>
+                           
+                            <p:outputLabel id="otxtNombre" for="txtNombre" value="Nombre"/>
+                            <p:inputText id="txtNombre" required="true" value="#{controladorDirigente.dirigenteSel.nombres}" placeholder="Ej. Edwin"/>
+                            
+                            <p:outputLabel value="Apellido" id="otxtApellido" for="txtApellido"/>
+                            <p:inputText value="#{controladorDirigente.dirigenteSel.apellidos}" id="txtApellido" required="true" placeholder="Ej.Maigua Moyota"/>
+                       
+                            <p:outputLabel id="otxtfechadenacimiento" for="txtfechadenacimiento" value="fechadenacimiento"/>
+                            <p:inputText id="txtfechadenacimiento" required="true" value="#{controladorDirigente.dirigenteSel.fecha_de_nacimiento}" placeholder="Ej. 1/12/1992"/>
+                           
+                            <p:outputLabel id="otxtgenero" for="txtgenero" value="Genero"/>
+                            <p:inputText id="txtgenero" required="true" value="#{controladorDirigente.dirigenteSel.genero}" placeholder="Ej. M"/>
+                            
+                            <p:outputLabel id="otxtfechaingreso" for="txtfechaingreso" value="FechaIngreso"/>
+                            <p:inputText id="txtfechaingreso" required="true" value="#{controladorDirigente.dirigenteSel.fecha_ingreso}" placeholder="Ej. 1/12/2016"/>
+                            
+                            <p:outputLabel id="otxtobservaciones" for="txtobservaciones" value="observaciones"/>
+                            <p:inputText id="txtobservaciones" required="true" value="#{controladorDirigente.dirigenteSel.observaciones}" placeholder="Ej. TEXTO"/>
+                            
+                        </p:panelGrid>
+                        
+                        <p:commandButton value="Aceptar" action="#{controladorDirigente.eliminarDirigente()}" 
+                                         update=":frmDirigente:pnlDirigente"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEditarDirigente.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+
             </ui:define>
         </ui:composition>
     </h:body>
 </html>
-
-
