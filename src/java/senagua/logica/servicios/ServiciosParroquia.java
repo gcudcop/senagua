@@ -126,5 +126,23 @@ public class ServiciosParroquia {
             throw new Exception(exConec.getMessage());
         }
         return band;
-    } 
+    }
+     
+     
+      public static ArrayList<Parroquia> obtenerParroquiaDadoCodigoCanton(int codigo) throws Exception {
+        ArrayList<Parroquia> lst = new ArrayList<Parroquia>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_parroquia_dado_codigocanton(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
+    
+     
 }
