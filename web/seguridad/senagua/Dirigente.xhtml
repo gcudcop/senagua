@@ -7,12 +7,12 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>
-            <ui:define name="Graduado">Gestión de Graduados</ui:define>
+            <ui:define name="Graduado">Secretaria del Agua</ui:define>
         </title>
     </h:head>
     <h:body>
         <ui:composition template="../../templates/plantillaInternaCenter.xhtml">
-            <ui:define name="top">Gestión de Graduados</ui:define>
+            <ui:define name="top">Secretaria del Agua</ui:define>
             <ui:define name="contenido">
                 <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
                 <h:form id="frmDirigente">
@@ -81,8 +81,8 @@
                             
                            
                             <f:facet name="footer">    
-                                  <p:commandButton id="btnNuevaDirigente" value="Nuevo" icon="ui-icon-newwin"
-                                                 oncomplete="wdlgNuevaDirigente.show()" title="Nuevo Dirigente"/>  
+                                  <p:commandButton id="btnNuevoDirigente" value="Nuevo" icon="ui-icon-newwin"
+                                                 oncomplete="wdlgNuevoDirigente.show()" title="Nuevo Dirigente"/>  
                                 <h:commandLink>
                                     <img src="../../resources/images/excel.png" alt=""/>
                                     <p:dataExporter type="xls" target="tblGraduado" fileName="Graduado" pageOnly="true" />
@@ -116,15 +116,15 @@
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
                 </p:dialog>
                 
-                 <p:dialog id="dlgNuevaDirigente" header="Nuevo Dirigente" widgetVar="wdlgNuevaDirigente" 
+                 <p:dialog id="dlgNuevoDirigente" header="Nuevo Dirigente" widgetVar="wdlgNuevoDirigente" 
                           modal="true" closable="false" resizable="false"
                           showEffect="clip" hideEffect="fold"> 
-                    <h:form id="frmNuevaDirigente">
+                    <h:form id="frmNuevoDirigente">
                         <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                         <p:panelGrid columns="4">
                   
-                            <p:outputLabel value="Cedula" id="otxtDirigente" for="txtDirigente"/>
-                            <p:inputText value="#{controladorDirigente.dirigente.cedula}" id="txtDirigente" required="true" placeholder="Ej. 0604792549"/>
+                            <p:outputLabel value="Cedula" id="otxtCedula" for="txtCedula"/>
+                            <p:inputText value="#{controladorDirigente.dirigente.cedula}" id="txtCedula" required="true" placeholder="Ej. 0604792549"/>
                            
                             <p:outputLabel id="otxtNombre" for="txtNombre" value="Nombre"/>
                             <p:inputText id="txtNombre" required="true" value="#{controladorDirigente.dirigente.nombres}" placeholder="Ej. Edwin"/>
@@ -132,22 +132,23 @@
                             <p:outputLabel value="Apellido" id="otxtApellido" for="txtApellido"/>
                             <p:inputText value="#{controladorDirigente.dirigente.apellidos}" id="txtApellido" required="true" placeholder="Ej.Maigua Moyota"/>
                        
-                            <p:outputLabel id="otxtfechadenacimiento" for="txtfechadenacimiento" value="fechadenacimiento"/>
-                            <p:inputText id="txtfechadenacimiento" required="true" value="#{controladorDirigente.dirigente.fecha_de_nacimiento}" placeholder="Ej. 1/12/1992"/>
+                            <p:outputLabel id="otxtfechadenacimiento" for="txtfechadenacimiento" value="Fecha de Nacimiento"/>
+                            <p:calendar id="txtfechadenacimiento" value="#{controladorDirigente.fechanacimiento}" locale="de" navigator="true" pattern="dd/mm/yyyy" placeholder="Ej. 25/05/1989"/>
+ 
                            
                             <p:outputLabel id="otxtgenero" for="txtgenero" value="Genero"/>
                             <p:inputText id="txtgenero" required="true" value="#{controladorDirigente.dirigente.genero}" placeholder="Ej. M"/>
                             
-                            <p:outputLabel id="otxtfechaingreso" for="txtfechaingreso" value="FechaIngreso"/>
-                            <p:inputText id="txtfechaingreso" required="true" value="#{controladorDirigente.dirigente.fecha_ingreso}" placeholder="Ej. 1/12/2016"/>
+                            <p:outputLabel id="otxtfechaingreso" for="txtfechaingreso" value="Fecha de Ingreso"/>
+                            <p:calendar id="txtfechaingreso" value="#{controladorDirigente.fechaingreso}" locale="de" navigator="true" pattern="dd/mm/yyyy" placeholder="Ej. 25/05/1989"/>
                             
-                            <p:outputLabel id="otxtobservaciones" for="txtobservaciones" value="observaciones"/>
+                            <p:outputLabel id="otxtobservaciones" for="txtobservaciones" value="Observaciones"/>
                             <p:inputText id="txtobservaciones" required="true" value="#{controladorDirigente.dirigente.observaciones}" placeholder="Ej. TEXTO"/>
                             
                         </p:panelGrid>
                         <p:commandButton value="Aceptar" action="#{controladorDirigente.insertarDirigente()}" 
                                          update=":frmDirigente:pnlDirigente"/>
-                        <p:commandButton value="Cancelar" onclick="wdlgNuevaDirigente.hide()" type="reset"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgNuevoDirigente.hide()" type="reset"/>
                     </h:form> 
                 </p:dialog>  
 
@@ -174,8 +175,7 @@
                         <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                         <p:messages id="messages" autoUpdate="true"/>  
                         <p:panelGrid id="pngEditarDirigente" columns="4">
-                            
-                            
+                                                        
                               <p:outputLabel value="Cedula" id="otxtDirigente" for="txtDirigente"/>
                               <p:inputText value="#{controladorDirigente.dirigenteSel.cedula}" id="txtDirigente" required="true" placeholder="Ej. 0604792549"/>
                            
@@ -186,20 +186,20 @@
                             <p:inputText value="#{controladorDirigente.dirigenteSel.apellidos}" id="txtApellido" required="true" placeholder="Ej.Maigua Moyota"/>
                        
                             <p:outputLabel id="otxtfechadenacimiento" for="txtfechadenacimiento" value="fechadenacimiento"/>
-                            <p:inputText id="txtfechadenacimiento" required="true" value="#{controladorDirigente.dirigenteSel.fecha_de_nacimiento}" placeholder="Ej. 1/12/1992"/>
+                             <p:calendar id="txtfechadenacimiento" value="#{controladorDirigente.fechanacimiento}" locale="de" navigator="true" pattern="dd/mm/yyyy" placeholder="Ej. 25/05/1989"/>
                            
                             <p:outputLabel id="otxtgenero" for="txtgenero" value="Genero"/>
                             <p:inputText id="txtgenero" required="true" value="#{controladorDirigente.dirigenteSel.genero}" placeholder="Ej. M"/>
                             
                             <p:outputLabel id="otxtfechaingreso" for="txtfechaingreso" value="FechaIngreso"/>
-                            <p:inputText id="txtfechaingreso" required="true" value="#{controladorDirigente.dirigenteSel.fecha_ingreso}" placeholder="Ej. 1/12/2016"/>
+                            <p:calendar id="txtfechaingreso" value="#{controladorDirigente.fechaingreso}" locale="de" navigator="true" pattern="dd/mm/yyyy" placeholder="Ej. 25/05/1989"/>
                             
                             <p:outputLabel id="otxtobservaciones" for="txtobservaciones" value="observaciones"/>
                             <p:inputText id="txtobservaciones" required="true" value="#{controladorDirigente.dirigenteSel.observaciones}" placeholder="Ej. TEXTO"/>
                             
                         </p:panelGrid>
                         
-                        <p:commandButton value="Aceptar" action="#{controladorDirigente.eliminarDirigente()}" 
+                        <p:commandButton value="Aceptar" action="#{controladorDirigente.editarDirigente()}" 
                                          update=":frmDirigente:pnlDirigente"/>
                         <p:commandButton value="Cancelar" onclick="wdlgEditarDirigente.hide()" type="reset"/>
                     </h:form> 
