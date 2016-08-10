@@ -6,18 +6,23 @@
 package senagua.presentacion.controladores;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.context.DefaultRequestContext;
+import recursos.StringToDate;
 import recursos.Util;
 import senagua.logica.clases.Dirigente;
 import senagua.logica.servicios.ServiciosDirigente;
+
 @ManagedBean
 @ViewScoped
 public class ControladorDirigente {
  private ArrayList<Dirigente> listDirigentes;
     private Dirigente dirigente;
     private Dirigente dirigenteSel;
+    private Date fechanacimiento;
+    private Date fechaingreso;
 
  
     public ControladorDirigente(){
@@ -41,11 +46,12 @@ public class ControladorDirigente {
     }
       public void insertarDirigente(){
          try {
-        
+             dirigente.setFecha_de_nacimiento(StringToDate.devolverFecha(fechanacimiento));
+             dirigente.setFecha_ingreso(StringToDate.devolverFecha(fechaingreso));
              if (ServiciosDirigente.insertarDirigente(dirigente)) {
                 this.init();
                 dirigente=new Dirigente();
-                DefaultRequestContext.getCurrentInstance().execute("wdlgNuevaDirigente.hide()");
+                DefaultRequestContext.getCurrentInstance().execute("wdlgNuevoDirigente.hide()");
                 Util.addSuccessMessage("Información guardada con éxito");
                 System.out.println("public void insertarDirigente() dice: Error al guardar la información");
             } else {
@@ -60,20 +66,21 @@ public class ControladorDirigente {
      
      public void editarDirigente(){
          try {
-         
+         dirigente.setFecha_de_nacimiento(StringToDate.devolverFecha(fechanacimiento));
+             dirigente.setFecha_ingreso(StringToDate.devolverFecha(fechaingreso));
              if (ServiciosDirigente.actualizarDirigente(dirigente)) {
                 this.init();
                 dirigenteSel=new Dirigente();
                 DefaultRequestContext.getCurrentInstance().execute("wdlgEditarDirigente.hide()");
                 Util.addSuccessMessage("Información guardada con éxito");
-                System.out.println("public void insertarDirigente() dice: Error al guardar la información");
+                System.out.println("public void editarDirigente() dice: Error al guardar la información");
             } else {
                 Util.addSuccessMessage("Error al guardar la información");
-                System.out.println("public void insertarDirigente() dice: Error al guardar la información");
+                System.out.println("public void editarDirigente() dice: Error al guardar la información");
             }
          } catch (Exception e) {
-             Util.addErrorMessage("public void insertarDirigente() dice: " + e.getMessage());
-            System.out.println("public void insertarDirigente() dice: " + e.getMessage());
+             Util.addErrorMessage("public void editarDirigente() dice: " + e.getMessage());
+            System.out.println("public void editarDirigente() dice: " + e.getMessage());
          }
      }
      
@@ -119,6 +126,22 @@ public class ControladorDirigente {
 
     public void setDirigenteSel(Dirigente dirigenteSel) {
         this.dirigenteSel = dirigenteSel;
+    }
+
+    public Date getFechanacimiento() {
+        return fechanacimiento;
+    }
+
+    public void setFechanacimiento(Date fechanacimiento) {
+        this.fechanacimiento = fechanacimiento;
+    }
+
+    public Date getFechaingreso() {
+        return fechaingreso;
+    }
+
+    public void setFechaingreso(Date fechaingreso) {
+        this.fechaingreso = fechaingreso;
     }
     
 }
