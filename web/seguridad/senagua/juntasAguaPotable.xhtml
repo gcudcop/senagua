@@ -17,6 +17,20 @@
                 <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
                 <h:form id="frmGraduado">
                     <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                    <p:panel id="pnlBusquedas">
+                        <f:facet name="header">
+                            <p:outputLabel value="Busquedas"/>
+                        </f:facet>
+                        <p:panelGrid columns="5">
+                            <p:outputLabel value="Provincia:"/>
+                            <p:selectOneMenu value="#{ctrlJAguaPotable.codigoProvincia}" id="menuProvincias">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Elija una opción--"/>
+                                <f:selectItems value="#{ctrlJAguaPotable.provincias}" var="provincias" 
+                                               itemLabel="#{provincias.nombreProvincia}" itemValue="#{provincias.codigoProvincia}"/>
+                                <p:ajax event="change" listener="#{ctrlJAguaPotable.obtenerJuntasDadoCodigoProvincia()}" update="@form"/>                                
+                            </p:selectOneMenu>                                                           
+                        </p:panelGrid>
+                    </p:panel>
                     <p:panel id="pnlGraduado">
                         <p:dataTable id="tblGraduado" value="#{ctrlJAguaPotable.listJuntas}" var="juntas"
                                      paginator="true" rows="15" selectionMode="single" rowKey="#{juntas.codigo}"

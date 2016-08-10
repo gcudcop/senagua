@@ -159,5 +159,35 @@ public class ServiciosJAguaPotable {
     }
 
     
+    public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoProvincia(int codigo) throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_junta_dado_provinciainnerjoin(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
+    
+     public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoCanton(int codigo) throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_junta_dado_parroquia(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
+    
     
 }

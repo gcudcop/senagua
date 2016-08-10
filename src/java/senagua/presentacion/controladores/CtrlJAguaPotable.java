@@ -108,7 +108,24 @@ public class CtrlJAguaPotable {
             System.out.println("public void obtenerJuntas() dice: " + e.getMessage());
         }
     }
+    
+     public void obtenerJuntasDadoCodigoProvincia() {
+        try {
+            this.listJuntas = ServiciosJAguaPotable.obtenerJuntasDadoCodigoProvincia(codigoProvincia);
+        } catch (Exception e) {
+            Util.addErrorMessage("public void obtenerJuntas() dice: " + e.getMessage());
+            System.out.println("public void obtenerJuntas() dice: " + e.getMessage());
+        }
+    }
 
+     public void obtenerJuntasDadoCodigoCanton() {
+        try {
+            this.listJuntas = ServiciosJAguaPotable.obtenerJuntasDadoCodigoCanton(codigoCanton);
+        } catch (Exception e) {
+            Util.addErrorMessage("public void obtenerJuntas() dice: " + e.getMessage());
+            System.out.println("public void obtenerJuntas() dice: " + e.getMessage());
+        }
+    }
     public void obtenerProvincias() {
         try {
             this.provincias = ServiciosProvincia.obtenerProvincias();
@@ -135,6 +152,8 @@ public class CtrlJAguaPotable {
             System.out.println("public void obtenerJuntas() dice: " + e.getMessage());
         }
     }
+    
+    
 
     public void obtenerParroquiasDadoCanton() {
         try {
