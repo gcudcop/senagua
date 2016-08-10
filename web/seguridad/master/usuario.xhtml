@@ -96,17 +96,15 @@
                     <h:form id="frmNuevoUsuario">
                         <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                         <p:messages id="messages" autoUpdate="true"/>  
-                        <p:panelGrid id="pngNuevoUsuario" columns="2">
-                             <h:outputText value="Busque una Persona:"/>
-                            <p:commandButton value="Buscar" onclick="wdialogoBusquedaPersonas.show()" process="@this"/>
+                        <p:panelGrid id="pngNuevoUsuario" columns="2">                             
                             <h:outputText value="Nombres"/>
-                            <p:inputText id="txtNombres" value="#{usuarioControlador.persona.nombre}" disabled="true"/>
+                            <p:inputText id="txtNombres" value="#{usuarioControlador.persona.nombre}" />
                             <h:outputText value="Apellidos"/>
-                            <p:inputText id="txtApellidos" value="#{usuarioControlador.persona.apellido}" disabled="true"/>
+                            <p:inputText id="txtApellidos" value="#{usuarioControlador.persona.apellido}" />
                             <h:outputText value="Nick"/>
                             <p:inputText value="#{usuarioControlador.usuario.nick}"/>
                             <h:outputText value="E-mail"/>
-                            <p:inputText id="txtMail" value="#{usuarioControlador.persona.mail}" disabled="true">
+                            <p:inputText id="txtMail" value="#{usuarioControlador.persona.mail}">
                                 <f:validator validatorId="recursos.utilBeans.ValidatorBean" for="txtMail"/>
                             </p:inputText>
                             <h:outputText id="otclave1" value="Clave"/>

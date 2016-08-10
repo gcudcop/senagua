@@ -130,4 +130,19 @@ public class ServiciosCanton {
         }
         return band;
     }
+     
+     public static ArrayList<Canton> obtenerCantonesDadoCodigoProvincia(int codigo) throws Exception {
+        ArrayList<Canton> lst = new ArrayList<Canton>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_canton_dado_codioprovincia(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
 }

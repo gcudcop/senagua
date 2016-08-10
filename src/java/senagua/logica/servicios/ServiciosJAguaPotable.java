@@ -7,6 +7,7 @@ package senagua.logica.servicios;
 
 import accesodatos.AccesoDatos;
 import accesodatos.ConjuntoResultado;
+import accesodatos.Parametro;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import senagua.logica.clases.JAguaPotable;
@@ -25,7 +26,7 @@ public class ServiciosJAguaPotable {
                 ja = new JAguaPotable(
                         rs.getInt("pcod_junta"),
                         rs.getString("pnombre_junta"),
-                        rs.getString("pestado"),                        
+                        rs.getString("pestado"),
                         ServiciosParroquia.obtenerParroquiaDadoCodigo(rs.getInt("pcodigo_parroquia")),
                         rs.getString("pdirector"),
                         ServiciosDirigente.obtenerDirigenteDadoCodigo(rs.getInt("pcodigo_dirigente")),
@@ -67,4 +68,96 @@ public class ServiciosJAguaPotable {
         return lst;
     }
 
+    public static boolean insertarJunta(JAguaPotable p) throws Exception {
+        boolean band = false;
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_insert_junta_agua_potable(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";           
+            lstP.add(new Parametro(1, p.getNombreJunta()));
+            lstP.add(new Parametro(2, p.getEstado()));
+            lstP.add(new Parametro(3, p.getCodigoParroquia().getCodigoParoquia()));
+            lstP.add(new Parametro(4, p.getDirector()));
+            lstP.add(new Parametro(5,p.getCodigoDirigente().getCodigoDirigente()));
+            lstP.add(new Parametro(6,p.getCorreoElectronico()));
+            lstP.add(new Parametro(7,p.getTelefono1()));
+            lstP.add(new Parametro(8,p.getTelefono2()));
+            lstP.add(new Parametro(9,p.getNumeroAutorizacion()));
+            lstP.add(new Parametro(10,p.getNumeroResolucion()));
+            lstP.add(new Parametro(11,p.getFecha_registro()));
+            lstP.add(new Parametro(12,p.getRuc()));
+            lstP.add(new Parametro(13,p.getCaudalAforado()));
+            lstP.add(new Parametro(14,p.getCaudalAutorizado()));
+            lstP.add(new Parametro(15,p.getNumeroConsumidores()));
+            lstP.add(new Parametro(16,p.getEjeX()));
+            lstP.add(new Parametro(17,p.getEjeY()));
+            lstP.add(new Parametro(18,p.getEjeZ()));
+            lstP.add(new Parametro(19,p.getObservaciones1()));
+            lstP.add(new Parametro(20,p.getObservaciones2()));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            while (rs.next()) {
+                if (rs.getString(0).equals("true"));
+                band = true;
+            }
+        } catch (SQLException exConec) {
+            throw new Exception(exConec.getMessage());
+        }
+        return band;
+    }
+    
+    public static boolean actualizarJunta(JAguaPotable p) throws Exception {
+        boolean band = false;
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_update_junta_agua_potable(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";           
+            lstP.add(new Parametro(1, p.getNombreJunta()));
+            lstP.add(new Parametro(2, p.getEstado()));
+            lstP.add(new Parametro(3, p.getCodigoParroquia().getCodigoParoquia()));
+            lstP.add(new Parametro(4, p.getDirector()));
+            lstP.add(new Parametro(5,p.getCodigoDirigente().getCodigoDirigente()));
+            lstP.add(new Parametro(6,p.getCorreoElectronico()));
+            lstP.add(new Parametro(7,p.getTelefono1()));
+            lstP.add(new Parametro(8,p.getTelefono2()));
+            lstP.add(new Parametro(9,p.getNumeroAutorizacion()));
+            lstP.add(new Parametro(10,p.getNumeroResolucion()));
+            lstP.add(new Parametro(11,p.getFecha_registro()));
+            lstP.add(new Parametro(12,p.getRuc()));
+            lstP.add(new Parametro(13,p.getCaudalAforado()));
+            lstP.add(new Parametro(14,p.getCaudalAutorizado()));
+            lstP.add(new Parametro(15,p.getNumeroConsumidores()));
+            lstP.add(new Parametro(16,p.getEjeX()));
+            lstP.add(new Parametro(17,p.getEjeY()));
+            lstP.add(new Parametro(18,p.getEjeZ()));
+            lstP.add(new Parametro(19,p.getObservaciones1()));
+            lstP.add(new Parametro(20,p.getObservaciones2()));
+            lstP.add(new Parametro(21,p.getCodigo()));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            while (rs.next()) {
+                if (rs.getString(0).equals("true"));
+                band = true;
+            }
+        } catch (SQLException exConec) {
+            throw new Exception(exConec.getMessage());
+        }
+        return band;
+    }
+
+    public static boolean eliminarJunta(int codigo) throws Exception {
+        boolean band = false;
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_delete_junta_agua_potable(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            while (rs.next()) {
+                if (rs.getString(0).equals("true"));
+                band = true;
+            }
+        } catch (SQLException exConec) {
+            throw new Exception(exConec.getMessage());
+        }
+        return band;
+    }
+
+    
+    
 }

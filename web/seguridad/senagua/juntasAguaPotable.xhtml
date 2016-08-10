@@ -26,15 +26,73 @@
                                     <p:outputLabel value="Nombre"/>
                                 </f:facet>
                                 <p:outputLabel value="#{juntas.nombreJunta}"/>
-                            </p:column>         
-                              <p:column>
+                            </p:column>    
+
+                            <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="estado"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{juntas.estado}"/>
+                                <p:outputLabel value="#{juntas.estado}"/>
+                            </p:column>    
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Fecha de registro"/>
+                                </f:facet>
+                                <p:outputLabel value="#{juntas.fecha_registro}"/>
+                            </p:column>  
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Provincia"/>
+                                </f:facet>
+                                <p:outputLabel value="#{juntas.codigoParroquia.codigoCanton.codigoProvincia.nombreProvincia}"/>
                             </p:column>   
 
-                            <f:facet name="footer">                                  
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Canton"/>
+                                </f:facet>
+                                <p:outputLabel value="#{juntas.codigoParroquia.codigoCanton.nombre}"/>
+                            </p:column>   
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Correo Electronico"/>
+                                </f:facet>
+                                <p:outputLabel value="#{juntas.correoElectronico}"/>
+                            </p:column>   
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Teléfono"/>
+                                </f:facet>
+                                <p:outputLabel value="#{juntas.telefono1}"/>
+                            </p:column>  
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Representante"/>
+                                </f:facet>
+                                <p:outputLabel value="#{juntas.codigoDirigente.nombres} #{juntas.codigoDirigente.apellidos}"/>
+                            </p:column>  
+
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton id="btnEditarCanton" icon="ui-icon-pencil"  title="Editar Canton" >                                   
+                                </p:commandButton>
+                                <p:commandButton id="btnEliminarJunta" icon="ui-icon-close"  title="Eliminar Junta"
+                                                 oncomplete="wdlgEliminarJunta.show()" update=":dlgEliminarJunta">
+                                    <f:setPropertyActionListener value="#{juntas}" target="#{ctrlJAguaPotable.juntaSel}"/>
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">       
+
+                                <p:commandButton id="btnNuevaJunta" value="Nuevo" icon="ui-icon-newwin"
+                                                 oncomplete="wdlgNuevaJunta.show()" title="Nueva Junta"/>  
                                 <h:commandLink>
                                     <img src="../../resources/images/excel.png" alt=""/>
                                     <p:dataExporter type="xls" target="tblGraduado" fileName="Graduado" pageOnly="true" />
@@ -67,6 +125,121 @@
                           resizable="false"> 
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
                 </p:dialog>
+                
+                 <p:dialog id="dlgEliminarJunta" header="Eliminar Junta" widgetVar="wdlgEliminarJunta" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEliminarJunta">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <h:outputText value="¿Desea Eliminar la parroquia?"/>
+                        <p:panelGrid id="pngEliminarJunta" columns="2">
+                            <h:outputText value="Junta"/>
+                            <p:outputLabel value="#{ctrlJAguaPotable.juntaSel.nombreJunta}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{ctrlJAguaPotable.eliminarJunta()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEliminarJunta.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+
+                <p:dialog id="dlgNuevaJunta" header="Nueva Junta" widgetVar="wdlgNuevaJunta" 
+                          modal="true" closable="false" resizable="false"
+                          showEffect="clip" hideEffect="fold"> 
+                    <h:form id="frmNuevaJunta">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:panelGrid columns="4">
+                            <p:outputLabel value="Nombre de la Junta:" id="otxtNombreJunta" for="txtNombreJunta"/>
+                            <p:inputTextarea id="txtNombreJunta" value="#{ctrlJAguaPotable.junta.nombreJunta}" required="true" placeholder="Ej. Junta de Agua Potable Sultana de los Andes"/>
+                            <p:outputLabel value="Estado" id="otxtEstadoJunta" for="txtEstadoJunta"/>
+                            <p:selectOneMenu id="txtEstadoJunta" value="#{ctrlJAguaPotable.junta.estado}" style="width:125px" required="true">
+                                <f:selectItem itemLabel="Seleccione.." itemValue="#{null}" />
+                                <f:selectItem itemLabel="Activa" itemValue="Activa" />
+                                <f:selectItem itemLabel="En proceso de acreditación" itemValue="En proceso de acreditación" />
+                                <f:selectItem itemLabel="Inactiva" itemValue="Inactiva" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Provincia: " id="otxtProvincia" for="menuProvincias"/>
+                            <p:selectOneMenu value="#{ctrlJAguaPotable.codigoProvincia}" id="menuProvincias">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Elija una opción--"/>
+                                <f:selectItems value="#{ctrlJAguaPotable.provincias}" var="provincias" 
+                                               itemLabel="#{provincias.nombreProvincia}" itemValue="#{provincias.codigoProvincia}"/>
+                                <p:ajax event="change" listener="#{ctrlJAguaPotable.obtenerCantonesDadoProvincia()}" update="menuCantones"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Canton" id="otxtCanton" for="menuCantones"/>
+                            <p:selectOneMenu value="#{ctrlJAguaPotable.codigoCanton}" id="menuCantones">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Elija una opción--"/>
+                                <f:selectItems value="#{ctrlJAguaPotable.cantones}" var="cantones" 
+                                               itemLabel="#{cantones.nombre}" itemValue="#{cantones.codigoCanton}"/>  
+                                <p:ajax event="change" listener="#{ctrlJAguaPotable.obtenerParroquiasDadoCanton()}" update="menuParroquias"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Parroquia" id="otxtParroquia" for="menuParroquias"/>
+                            <p:selectOneMenu value="#{ctrlJAguaPotable.codigoParroquia}" id="menuParroquias">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Elija una opción--"/>
+                                <f:selectItems value="#{ctrlJAguaPotable.parroquias}" var="parroquias" 
+                                               itemLabel="#{parroquias.nombre}" itemValue="#{parroquias.codigoParoquia}"/>                                            
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Dirección" id="otxtDireccion" for="txtDireccion"/>
+                            <p:inputTextarea value="#{ctrlJAguaPotable.junta.director}" id="txtDireccion" required="true" placeholder="Ej. Avda. 11 de Noviembre y Jose María Saenz"/>
+
+                            <p:outputLabel value="Dirigente" id="otxtDirigente" for="menuDirigentes"/>
+                            <p:selectOneMenu value="#{ctrlJAguaPotable.codigoDirigente}" id="menuDirigentes">
+                                <f:selectItem itemValue="#{null}" itemLabel="--Elija una opción--"/>
+                                <f:selectItems value="#{ctrlJAguaPotable.dirigentes}" var="dirigentes" 
+                                               itemLabel="#{dirigentes.nombres} #{dirigentes.apellidos}" itemValue="#{dirigentes.codigoDirigente}"/>                                            
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Correo electrónico" id="otxtEmail" for="txtEmail"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.correoElectronico}" required="true" id="txtEmail" placeholder="Ej. jalosandes@gmail.com"/>
+                            <p:outputLabel value="Teléfono 1" id="otxtTelefono" for="txtTelefono"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.telefono1}" id="txtTelefono" required="true" placeholder="Ej. 0996824308"/>
+
+                            <p:outputLabel value="Teléfono 2" id="otxtTelefono2" for="txtTelefono2"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.telefono2}" id="txtTelefono2" required="true" placeholder="Ej. 0996824308"/>
+
+                            <p:outputLabel value="Número de Resolución" id="otxtNumResolucion" for="txtNumResolucion"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.numeroResolucion}" id="txtNumResolucion" required="true" placeholder="Ej. 2011-JA201"/>
+
+                            <p:outputLabel value="Número de Autorización" id="otxtNumAutorizacion" for="txtNumAutorizacion"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.numeroAutorizacion}" id="txtNumAutorizacion" required="true" placeholder="Ej. 2011-JA201"/>
+                            
+                            <p:outputLabel value="Fecha de Registro" id="otxtFechaRegistro" for="txtFechaRegistro"/>
+                            <p:calendar id="txtFechaRegistro" value="#{ctrlJAguaPotable.fechaRegistro}" locale="de" navigator="true" pattern="dd/MM/yyyy" required="true" placeholder="dd/mm/yyyy"/>
+
+                            <p:outputLabel value="RUC" id="otxtRuc" for="txtRuc"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.ruc}" id="txtRuc" required="true" placeholder="Ej. 0603977224001"/>
+                            
+                            <p:outputLabel value="Caudal Aforado (lts)" id="otxtCaudalAforado" for="txtCaudalAforado"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.caudalAforado}" id="txtCaudalAforado" required="true" placeholder="Ej. 25000"/>
+                            
+                            <p:outputLabel value="Caudal Autorizado (lts)" id="otxtCaudalAutorizado" for="txtCaudalAutorizado"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.caudalAutorizado}" id="txtCaudalAutorizado" required="true" placeholder="Ej. 25000"/>
+                            
+                            <p:outputLabel value="Núemro de consumidores" id="otxtNumConsumidores" for="txtNumConsumidores"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.numeroConsumidores}" id="txtNumConsumidores" required="true" placeholder="Ej. 25000"/>
+                            
+                            <p:outputLabel value="Coordenada X" id="otxtCoordenadaX" for="txtCoordenadaX"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.ejeX}" id="txtCoordenadaX" required="true" placeholder="Ej. 25000"/>
+                            
+                            <p:outputLabel value="Coordenada Y" id="otxtCoordenadaY" for="txtCoordenadaY"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.ejeY}" id="txtCoordenadaY" required="true" placeholder="Ej. 25000"/>
+                            
+                            <p:outputLabel value="Coordenada Z" id="otxtCoordenadaZ" for="txtCoordenadaZ"/>
+                            <p:inputText value="#{ctrlJAguaPotable.junta.ejeZ}" id="txtCoordenadaZ" required="true" placeholder="Ej. 25000"/>
+                            
+                            <p:outputLabel value="Observaciones 1" id="otxtObservaciones1" for="txtObservaciones1"/>
+                            <p:inputTextarea value="#{ctrlJAguaPotable.junta.observaciones1}" id="txtObservaciones1" required="true" placeholder="Ej. Junta en proceso de adjudicación"/>
+                            
+                            <p:outputLabel value="Observaciones 2" id="otxtObservaciones2" for="txtObservaciones2"/>
+                            <p:inputTextarea value="#{ctrlJAguaPotable.junta.observaciones2}" id="txtObservaciones2" required="true" placeholder="Ej. Junta en proceso de adjudicación"/>
+                            
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{ctrlJAguaPotable.insertarJunta()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgNuevaJunta.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>  
+
+
             </ui:define>
         </ui:composition>
     </h:body>
