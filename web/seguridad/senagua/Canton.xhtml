@@ -23,30 +23,44 @@
                                      selection="#{controladorCanton.cantonSel}">
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="Codigo Provincia"/>
+                                    <p:outputLabel value="Provincia"/>
                                 </f:facet>
-                                <p:outputLabel value="#{canton.codigoProvincia}"/>
+                                <p:outputLabel value="#{canton.codigoProvincia.nombreProvincia}"/>
                             </p:column>         
-                              <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Nombres"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{canton.nombre}"/>
+                                <p:outputLabel value="#{canton.nombre}"/>
                             </p:column>   
-                              <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Población"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{canton.poblacion}"/>
+                                <p:outputLabel value="#{canton.poblacion}"/>
                             </p:column>   
-                              <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Observaciones"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{canton.observaciones}"/>
+                                <p:outputLabel value="#{canton.observaciones}"/>
                             </p:column>   
-                             
-                            <f:facet name="footer">                                  
+                            
+                            <p:column exportable="false">
+                                 <f:facet name="header">
+                                    <p:outputLabel value="Acciones"/>
+                                </f:facet>
+                                <p:commandButton id="btnEditarCanton" icon="ui-icon-pencil"  title="Editar Canton" >                                   
+                                </p:commandButton>
+                                <p:commandButton id="btnEliminarCanton" icon="ui-icon-close"  title="Eliminar Canton">                                    
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">   
+
+                                <p:commandButton id="btnNuevoCanton" value="Nuevo" icon="ui-icon-newwin"
+                                                 oncomplete="wdlgNuevoCanton.show()" title="Nuevo Graduado"/>  
+
                                 <h:commandLink>
                                     <img src="../../resources/images/excel.png" alt=""/>
                                     <p:dataExporter type="xls" target="tblGraduado" fileName="Graduado" pageOnly="true" />
@@ -79,6 +93,32 @@
                           resizable="false"> 
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
                 </p:dialog>
+
+                <p:dialog id="dlgNuevoCanton" header="Nuevo Canton" widgetVar="wdlgNuevoCanton" 
+                          modal="true" closable="false" resizable="false"
+                          showEffect="clip" hideEffect="fold"> 
+                    <h:form id="frmNuevoGraduado">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Provincia" />
+                            <p:selectOneMenu value="#{controladorCanton.codigoProvincia}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                <f:selectItems value="#{controladorCanton.listProvincia}" var="provincias" itemLabel="#{provincias.nombreProvincia}" itemValue="#{provincias.codigoProvincia}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nombre del Cantón" id="otxtCanton" for="txtCanton"/>
+                            <p:inputText value="#{controladorCanton.canton.nombre}" id="txtCanton" required="true" placeholder="Ej. Colta"/>
+                            <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>
+                            <p:inputText id="txtPoblacion" required="true" value="#{controladorCanton.canton.poblacion}" placeholder="Ej. 120000"/>
+                            <p:outputLabel value="Observaciones" id="otxtObservaciones" for="txtObservaciones"/>
+                            <p:inputText value="#{controladorCanton.canton.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Cantón nuevo"/>
+                        </p:panelGrid>
+
+
+                        <p:commandButton value="Aceptar" action="#{controladorCanton.insertarCanton()}" 
+                                         update="@form"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgNuevoCanton.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>  
             </ui:define>
         </ui:composition>
     </h:body>

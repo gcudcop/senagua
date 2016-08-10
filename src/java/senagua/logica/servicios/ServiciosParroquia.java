@@ -25,7 +25,7 @@ public class ServiciosParroquia {
             while (rs.next()) {
                 p = new Parroquia(
                         rs.getInt("pcodigo_parroquia"),
-                        ServiciosCanton.obtenerProvinciaDadoCodigo(rs.getInt("codigo_canton")),
+                        ServiciosCanton.obtenerProvinciaDadoCodigo(rs.getInt("pcodigo_canton")),
                         rs.getString("pnombre"),
                         rs.getDouble("ppoblacion"),
                         rs.getString("pobservaciones")
@@ -111,7 +111,7 @@ public class ServiciosParroquia {
         boolean band = false;
         try {
             ArrayList<Parametro> lstP = new ArrayList<Parametro>();
-            String sql = "select * from senagua.f_insert_parroquia(?,?,?,?,?)";
+            String sql = "select * from senagua.f_update_parroquia(?,?,?,?,?)";
             lstP.add(new Parametro(1, p.getCodigoCanton().getCodigoCanton()));
             lstP.add(new Parametro(2, p.getNombre()));
             lstP.add(new Parametro(3, p.getPoblacion()));

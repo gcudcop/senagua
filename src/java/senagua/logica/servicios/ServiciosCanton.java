@@ -27,7 +27,7 @@ public class ServiciosCanton {
                 c = new Canton(
                         rs.getInt("pcodigo_canton"),
                         ServiciosProvincia.obtenerProvinciaDadoCodigo(rs.getInt("pcodigo_provincia")),
-                        rs.getString("pnombre_canton"),
+                        rs.getString("pnombre"),
                         rs.getString("pobservaciones"),
                         rs.getDouble("ppoblacion")                        
                 );
@@ -88,8 +88,8 @@ public class ServiciosCanton {
         return lst;
     }
     
-     public static boolean insertarCanton(Canton p) throws Exception {
-        boolean band = false;
+     public static long insertarCanton(Canton p) throws Exception {
+        long band = 0;
         try {
             ArrayList<Parametro> lstP = new ArrayList<Parametro>();
             String sql = "select * from senagua.f_insert_canton(?,?,?,?)";
@@ -101,7 +101,7 @@ public class ServiciosCanton {
             ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
             while (rs.next()) {
                 if (rs.getString(0).equals("true"));
-                band = true;
+                band=1;
             }
         } catch (SQLException exConec) {
             throw new Exception(exConec.getMessage());

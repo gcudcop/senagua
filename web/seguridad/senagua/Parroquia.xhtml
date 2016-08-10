@@ -19,28 +19,47 @@
                     <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
                     <p:panel id="pnlGraduado">
                         <p:dataTable id="tblGraduado" value="#{controladorParroquia.listParroquia}" var="parroquia"
-                                     paginator="true" rows="15" selectionMode="single" rowKey="#{parroquia}"
+                                     paginator="true" rows="15" selectionMode="single" rowKey="#{parroquia.codigoCanton}"
                                      selection="#{controladorParroquia.parroquiaSel}">
                             <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Nombre"/>
                                 </f:facet>
-                                <p:outputLabel value="#{provincia.nombreProvincia}"/>
+                                <p:outputLabel value="#{parroquia.nombre}"/>
                             </p:column>         
-                              <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Población"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{provincia.poblacion}"/>
+                                <p:outputLabel value="#{parroquia.poblacion}"/>
                             </p:column>   
-                              <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Observaciones"/>
                                 </f:facet>
-                                  <p:outputLabel value="#{provincia.observaciones}"/>
+                                <p:outputLabel value="#{parroquia.observaciones}"/>
                             </p:column>   
 
-                            <f:facet name="footer">                                  
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Acciones"/>
+                                </f:facet>
+                                 <p:commandButton id="btnEditarParroquia" icon="ui-icon-pencil"  title="Editar Parroquia" 
+                                                 oncomplete="wdlgEditarParroquia.show()" update=":dlgEditarParroquia" process="@this">
+                                     <f:setPropertyActionListener value="#{parroquia}" target="#{controladorParroquia.parroquiaSel}"/>
+                                </p:commandButton>
+                                
+                                <p:commandButton id="btnEliminarParroquia" icon="ui-icon-close"  title="Eliminar Parroquia"
+                                                 oncomplete="wdlgEliminarParroquia.show()" update=":dlgEliminarParroquia">
+                                    <f:setPropertyActionListener value="#{parroquia}" target="#{controladorParroquia.parroquiaSel}"/>
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">  
+
+                                <p:commandButton id="btnNuevaParroquia" value="Nuevo" icon="ui-icon-newwin"
+                                                 oncomplete="wdlgNuevaParroquia.show()" title="Nueva Parroquia"/>  
+
                                 <h:commandLink>
                                     <img src="../../resources/images/excel.png" alt=""/>
                                     <p:dataExporter type="xls" target="tblGraduado" fileName="Graduado" pageOnly="true" />
@@ -73,6 +92,73 @@
                           resizable="false"> 
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
                 </p:dialog>
+
+
+                <p:dialog id="dlgNuevaParroquia" header="Nueva Parroquia" widgetVar="wdlgNuevaParroquia" 
+                          modal="true" closable="false" resizable="false"
+                          showEffect="clip" hideEffect="fold"> 
+                    <h:form id="frmNuevaParroquia">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Cantón" />
+                            <p:selectOneMenu value="#{controladorParroquia.codigoCanton}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                <f:selectItems value="#{controladorParroquia.listCanton}" var="canton" itemLabel="#{canton.nombre}" itemValue="#{canton.codigoCanton}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nombre" id="otxtCanton" for="txtCanton"/>
+                            <p:inputText value="#{controladorParroquia.parroquia.nombre}" id="txtCanton" required="true" placeholder="Ej. Lizarzaburu"/>
+                            <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>
+                            <p:inputText id="txtPoblacion" required="true" value="#{controladorParroquia.parroquia.poblacion}" placeholder="Ej. 120000"/>
+                            <p:outputLabel value="Observaciones" id="otxtObservaciones" for="txtObservaciones"/>
+                            <p:inputText value="#{controladorParroquia.parroquia.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Cantón nuevo"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorParroquia.insertarParroquia()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgNuevaParroquia.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>  
+
+                <p:dialog id="dlgEliminarParroquia" header="Eliminar Canton" widgetVar="wdlgEliminarParroquia" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEliminarCanton">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <h:outputText value="¿Desea Eliminar la parroquia?"/>
+                        <p:panelGrid id="pngEliminarGraduado" columns="2">
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText value="#{controladorParroquia.parroquiaSel.nombre}" title="ej: Sandra" 
+                                         required="true" requiredMessage="Ingrese el nombre" disabled="true"/>                            
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorParroquia.eliminarParroquia()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEliminarParroquia.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+                
+                
+                <p:dialog id="dlgEditarParroquia" header="Editar Parroquia" widgetVar="wdlgEditarParroquia" 
+                          modal="true" closable="false" resizable="false" showEffect="clip" hideEffect="fold">  
+                    <h:form id="frmEditarGraduado">
+                        <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                        <p:messages id="messages" autoUpdate="true"/>  
+                        <p:panelGrid id="pngEditarGraduado" columns="4">
+                           <p:outputLabel value="Cantón" />
+                            <p:selectOneMenu value="#{controladorParroquia.codigoCanton}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                <f:selectItems value="#{controladorParroquia.listCanton}" var="canton" itemLabel="#{canton.nombre}" itemValue="#{canton.codigoCanton}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nombre" id="otxtCanton" for="txtCanton"/>
+                            <p:inputText value="#{controladorParroquia.parroquiaSel.nombre}" id="txtCanton" required="true" placeholder="Ej. Lizarzaburu"/>
+                            <p:outputLabel id="otxtPoblacion" for="txtPoblacion" value="Población"/>
+                            <p:inputText id="txtPoblacion" required="true" value="#{controladorParroquia.parroquiaSel.poblacion}" placeholder="Ej. 120000"/>
+                            <p:outputLabel value="Observaciones" id="otxtObservaciones" for="txtObservaciones"/>
+                            <p:inputText value="#{controladorParroquia.parroquiaSel.observaciones}" id="txtObservaciones" required="true" placeholder="Ej. Cantón nuevo"/>                                                                                                               
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar" action="#{controladorParroquia.editarParroquia()}" 
+                                         update=":frmGraduado:pnlGraduado"/>
+                        <p:commandButton value="Cancelar" onclick="wdlgEditarParroquia.hide()" type="reset"/>
+                    </h:form> 
+                </p:dialog>
+
             </ui:define>
         </ui:composition>
     </h:body>
