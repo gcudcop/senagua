@@ -8,6 +8,7 @@ package senagua.presentacion.controladores;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.context.DefaultRequestContext;
 import recursos.Util;
 import senagua.logica.clases.Dirigente;
 import senagua.logica.servicios.ServiciosDirigente;
@@ -38,6 +39,63 @@ public class ControladorDirigente {
             System.out.println("public void obtenerDirigente() dice: " + e.getMessage());
         }
     }
+      public void insertarDirigente(){
+         try {
+        
+             if (ServiciosDirigente.insertarDirigente(dirigente)) {
+                this.init();
+                dirigente=new Dirigente();
+                DefaultRequestContext.getCurrentInstance().execute("wdlgNuevaDirigente.hide()");
+                Util.addSuccessMessage("Información guardada con éxito");
+                System.out.println("public void insertarDirigente() dice: Error al guardar la información");
+            } else {
+                Util.addSuccessMessage("Error al guardar la información");
+                System.out.println("public void insertarDirigente() dice: Error al guardar la información");
+            }
+         } catch (Exception e) {
+             Util.addErrorMessage("public void insertarDirigente dice: " + e.getMessage());
+            System.out.println("public void insertarDirigente dice: " + e.getMessage());
+         }
+     }
+     
+     public void editarDirigente(){
+         try {
+         
+             if (ServiciosDirigente.actualizarDirigente(dirigente)) {
+                this.init();
+                dirigenteSel=new Dirigente();
+                DefaultRequestContext.getCurrentInstance().execute("wdlgEditarDirigente.hide()");
+                Util.addSuccessMessage("Información guardada con éxito");
+                System.out.println("public void insertarDirigente() dice: Error al guardar la información");
+            } else {
+                Util.addSuccessMessage("Error al guardar la información");
+                System.out.println("public void insertarDirigente() dice: Error al guardar la información");
+            }
+         } catch (Exception e) {
+             Util.addErrorMessage("public void insertarDirigente() dice: " + e.getMessage());
+            System.out.println("public void insertarDirigente() dice: " + e.getMessage());
+         }
+     }
+     
+     public void eliminarDirigente() {
+        try {
+            //if (ServiciosGraduados.eliminarGraduado((int) graduadoSel.getCodigo())) {
+            if(ServiciosDirigente.eliminarDirigente((int)dirigenteSel.getCodigoDirigente())){
+                this.init();
+                DefaultRequestContext.getCurrentInstance().execute("wdlgEliminarDirigente.hide()");
+                Util.addSuccessMessage("Información eliminada.");
+                System.out.println("public void eliminarDirigente() dice: Información eliminada.");
+            } else {
+                Util.addErrorMessage("Error al eliminar la información.");
+                System.out.println("public void eliminarDirigente() dice: Error al eliminar la información");
+            }
+        } catch (Exception e) {
+            Util.addErrorMessage("public void eliminarDirigente() dice: " + e.getMessage());
+            System.out.println("public void eliminarDirigente() dice: " + e.getMessage());
+        }
+
+    }
+    
 
     public ArrayList<Dirigente> getListDirigentes() {
         return listDirigentes;
