@@ -72,27 +72,27 @@ public class ServiciosJAguaPotable {
         boolean band = false;
         try {
             ArrayList<Parametro> lstP = new ArrayList<Parametro>();
-            String sql = "select * from senagua.f_insert_junta_agua_potable(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";           
+            String sql = "select * from senagua.f_insert_junta_agua_potable(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             lstP.add(new Parametro(1, p.getNombreJunta()));
             lstP.add(new Parametro(2, p.getEstado()));
             lstP.add(new Parametro(3, p.getCodigoParroquia().getCodigoParoquia()));
             lstP.add(new Parametro(4, p.getDirector()));
-            lstP.add(new Parametro(5,p.getCodigoDirigente().getCodigoDirigente()));
-            lstP.add(new Parametro(6,p.getCorreoElectronico()));
-            lstP.add(new Parametro(7,p.getTelefono1()));
-            lstP.add(new Parametro(8,p.getTelefono2()));
-            lstP.add(new Parametro(9,p.getNumeroAutorizacion()));
-            lstP.add(new Parametro(10,p.getNumeroResolucion()));
-            lstP.add(new Parametro(11,p.getFecha_registro()));
-            lstP.add(new Parametro(12,p.getRuc()));
-            lstP.add(new Parametro(13,p.getCaudalAforado()));
-            lstP.add(new Parametro(14,p.getCaudalAutorizado()));
-            lstP.add(new Parametro(15,p.getNumeroConsumidores()));
-            lstP.add(new Parametro(16,p.getEjeX()));
-            lstP.add(new Parametro(17,p.getEjeY()));
-            lstP.add(new Parametro(18,p.getEjeZ()));
-            lstP.add(new Parametro(19,p.getObservaciones1()));
-            lstP.add(new Parametro(20,p.getObservaciones2()));
+            lstP.add(new Parametro(5, p.getCodigoDirigente().getCodigoDirigente()));
+            lstP.add(new Parametro(6, p.getCorreoElectronico()));
+            lstP.add(new Parametro(7, p.getTelefono1()));
+            lstP.add(new Parametro(8, p.getTelefono2()));
+            lstP.add(new Parametro(9, p.getNumeroAutorizacion()));
+            lstP.add(new Parametro(10, p.getNumeroResolucion()));
+            lstP.add(new Parametro(11, p.getFecha_registro()));
+            lstP.add(new Parametro(12, p.getRuc()));
+            lstP.add(new Parametro(13, p.getCaudalAforado()));
+            lstP.add(new Parametro(14, p.getCaudalAutorizado()));
+            lstP.add(new Parametro(15, p.getNumeroConsumidores()));
+            lstP.add(new Parametro(16, p.getEjeX()));
+            lstP.add(new Parametro(17, p.getEjeY()));
+            lstP.add(new Parametro(18, p.getEjeZ()));
+            lstP.add(new Parametro(19, p.getObservaciones1()));
+            lstP.add(new Parametro(20, p.getObservaciones2()));
             ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
             while (rs.next()) {
                 if (rs.getString(0).equals("true"));
@@ -103,33 +103,33 @@ public class ServiciosJAguaPotable {
         }
         return band;
     }
-    
+
     public static boolean actualizarJunta(JAguaPotable p) throws Exception {
         boolean band = false;
         try {
             ArrayList<Parametro> lstP = new ArrayList<Parametro>();
-            String sql = "select * from senagua.f_update_junta_agua_potable(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";           
+            String sql = "select * from senagua.f_update_junta_agua_potable(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             lstP.add(new Parametro(1, p.getNombreJunta()));
             lstP.add(new Parametro(2, p.getEstado()));
             lstP.add(new Parametro(3, p.getCodigoParroquia().getCodigoParoquia()));
             lstP.add(new Parametro(4, p.getDirector()));
-            lstP.add(new Parametro(5,p.getCodigoDirigente().getCodigoDirigente()));
-            lstP.add(new Parametro(6,p.getCorreoElectronico()));
-            lstP.add(new Parametro(7,p.getTelefono1()));
-            lstP.add(new Parametro(8,p.getTelefono2()));
-            lstP.add(new Parametro(9,p.getNumeroAutorizacion()));
-            lstP.add(new Parametro(10,p.getNumeroResolucion()));
-            lstP.add(new Parametro(11,p.getFecha_registro()));
-            lstP.add(new Parametro(12,p.getRuc()));
-            lstP.add(new Parametro(13,p.getCaudalAforado()));
-            lstP.add(new Parametro(14,p.getCaudalAutorizado()));
-            lstP.add(new Parametro(15,p.getNumeroConsumidores()));
-            lstP.add(new Parametro(16,p.getEjeX()));
-            lstP.add(new Parametro(17,p.getEjeY()));
-            lstP.add(new Parametro(18,p.getEjeZ()));
-            lstP.add(new Parametro(19,p.getObservaciones1()));
-            lstP.add(new Parametro(20,p.getObservaciones2()));
-            lstP.add(new Parametro(21,p.getCodigo()));
+            lstP.add(new Parametro(5, p.getCodigoDirigente().getCodigoDirigente()));
+            lstP.add(new Parametro(6, p.getCorreoElectronico()));
+            lstP.add(new Parametro(7, p.getTelefono1()));
+            lstP.add(new Parametro(8, p.getTelefono2()));
+            lstP.add(new Parametro(9, p.getNumeroAutorizacion()));
+            lstP.add(new Parametro(10, p.getNumeroResolucion()));
+            lstP.add(new Parametro(11, p.getFecha_registro()));
+            lstP.add(new Parametro(12, p.getRuc()));
+            lstP.add(new Parametro(13, p.getCaudalAforado()));
+            lstP.add(new Parametro(14, p.getCaudalAutorizado()));
+            lstP.add(new Parametro(15, p.getNumeroConsumidores()));
+            lstP.add(new Parametro(16, p.getEjeX()));
+            lstP.add(new Parametro(17, p.getEjeY()));
+            lstP.add(new Parametro(18, p.getEjeZ()));
+            lstP.add(new Parametro(19, p.getObservaciones1()));
+            lstP.add(new Parametro(20, p.getObservaciones2()));
+            lstP.add(new Parametro(21, p.getCodigo()));
             ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
             while (rs.next()) {
                 if (rs.getString(0).equals("true"));
@@ -157,9 +157,10 @@ public class ServiciosJAguaPotable {
         }
         return band;
     }
-        public static ArrayList<JAguaPotable> obtenerjunta_agua_potableEstado() throws Exception {
+
+    public static ArrayList<JAguaPotable> obtenerjunta_agua_potableEstado() throws Exception {
         ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
-        try {                          
+        try {
             String sql = "select * from senagua.f_select_junta_agua_potable_estado_estadisticas()";
             ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql);
             lst = llenarDatos(rs);
@@ -169,12 +170,20 @@ public class ServiciosJAguaPotable {
         }
         return lst;
     }
-
-    public static Object obtenerjunta_agua_potableEstado(String estado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     
+      public static ArrayList<JAguaPotable> obtenerEstadosJuntas() throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {
+            String sql = "select * from senagua.f_select_junta_agua_potable_estado_estadisticas()";
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (SQLException exConec) {
+            throw new Exception(exConec.getMessage());
+        }
+        return lst;
+    }
+   
     public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoProvincia(int codigo) throws Exception {
         ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
         try {
@@ -189,8 +198,8 @@ public class ServiciosJAguaPotable {
         }
         return lst;
     }
-    
-     public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoCanton(int codigo) throws Exception {
+
+    public static ArrayList<JAguaPotable> obtenerJuntasDadoCodigoCanton(int codigo) throws Exception {
         ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
         try {
             ArrayList<Parametro> lstP = new ArrayList<Parametro>();
@@ -205,5 +214,19 @@ public class ServiciosJAguaPotable {
         return lst;
     }
     
-    
+    public static ArrayList<JAguaPotable> obtenerJuntasDadoEstado(String codigo) throws Exception {
+        ArrayList<JAguaPotable> lst = new ArrayList<JAguaPotable>();
+        try {
+            ArrayList<Parametro> lstP = new ArrayList<Parametro>();
+            String sql = "select * from senagua.f_select_junta_dado_estado(?)";
+            lstP.add(new Parametro(1, codigo));
+            ConjuntoResultado rs = AccesoDatos.ejecutaQuery(sql, lstP);
+            lst = llenarDatos(rs);
+            rs = null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lst;
+    }
+
 }

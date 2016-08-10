@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            <ui:define name="Datos">Estadística por género</ui:define>
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/plantillaInternaCenter.xhtml">
+            <ui:define name="top">Estadísticas por Estado</ui:define>
+            <ui:define name="contenido">
+                <p:growl id="mensajes" autoUpdate="true" showDetail="true"/>
+                <h:form id="frmdatos" style="alignment-adjust: central">
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+                    <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();" />
+
+                    <p:panel id="pnlGraficos" header="Estado Civil" >
+
+                        <p:accordionPanel style="max-height: 800px;max-width: 1200px">
+                             <p:tab title="Gráfica en pastel" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>
+                                <p:pieChart   value="#{controladorJAguaPotableEstado.pieModel}" legendPosition="e" showDataLabels="true"
+                                              title="Estado Civil" style="height:320px;width:950px;text-decoration-style: dashed"/>                                  
+                            </p:tab>
+                            <p:tab title="Gráfico de Barras" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                                                
+                                <p:barChart   value="#{controladorJAguaPotableEstado.lineModel}"
+                                              title="Estado Civil" style="height:320px;width:950px;text-decoration-style: dashed"
+                                               xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                            </p:tab>
+                            
+                             <p:tab title="Gráfico de Series" >
+                                <p:ajaxStatus onstart="dlgStatus.show();" oncomplete="dlgStatus.hide();"/>                                                                
+                                <p:lineChart   value="#{controladorJAguaPotableEstado.lineModel}"
+                                              title="Estado Civil" style="height:320px;width:950px;text-decoration-style: dashed"
+                                               xaxisAngle="0" yaxisLabel="# Graduados" animate="true"/>  
+                                <h:outputScript  library="jqplot-plugins" name="jqplot.pointLabels.min.js" />
+                            </p:tab>
+                            
+                            <script type="text/javascript">
+                                function my_ext() {
+                                    this.cfg.seriesDefaults = {
+                                        renderer: $.jqplot.BarRenderer,
+                                        pointLabels: {show: true}
+                                    };
+                                    this.cfg.stackSeries: true;
+                                }
+                            </script>
+                        </p:accordionPanel>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="dialogos">
+                <p:dialog modal="true" widgetVar="dlgStatus" header="Procesando" draggable="false" closable="false" 
+                          resizable="false"> 
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

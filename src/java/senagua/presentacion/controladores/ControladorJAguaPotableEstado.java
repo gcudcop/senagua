@@ -7,6 +7,8 @@ package senagua.presentacion.controladores;
 
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -14,13 +16,11 @@ import org.primefaces.model.chart.PieChartModel;
 import senagua.logica.servicios.ServiciosJAguaPotable;
 import senagua.logica.clases.JAguaPotable;
 
-/**
- *
- * @author Enrique
- */
+@ManagedBean
+@ViewScoped
 public class ControladorJAguaPotableEstado {
-    
-  private CartesianChartModel lineModel;
+
+    private CartesianChartModel lineModel;
     private PieChartModel pieModel;
     private ArrayList<JAguaPotable> lst;
 
@@ -35,18 +35,17 @@ public class ControladorJAguaPotableEstado {
 
     @PostConstruct
     public void graficar() {
-        lineModel = grafica();
+        lineModel = grafica();     
         createPieModel();
     }
 
     private CartesianChartModel grafica() {
         CartesianChartModel model = new CartesianChartModel();
         try {
-            lst = ServiciosJAguaPotable.obtenerjunta_agua_potableEstado();
+            lst = ServiciosJAguaPotable.obtenerEstadosJuntas();
             ChartSeries test = new ChartSeries();
             for (int i = 0; i < lst.size(); i++) {
-                test.set(String.valueOf(ServiciosJAguaPotable.obtenerjunta_agua_potableEstado().get(i).getEstado())+" ESTADO",
-                       ServiciosJAguaPotable.obtene(ServiciosColegiatura.obtenerColegiaturaTiempoCarrera().get(i).getTiempoCarrera()).size());
+               test.set(lst.get(i).getEstado(), ServiciosJAguaPotable.obtenerJuntasDadoEstado(lst.get(i).getEstado()).size());
 
             }
             model.addSeries(test);
@@ -55,15 +54,14 @@ public class ControladorJAguaPotableEstado {
         }
         return model;
     }
-
+    
+    
     private void createPieModel() {
         pieModel = new PieChartModel();
         try {
-            lst = ServiciosJAguaPotable.obtenerjunta_agua_potableEstado();
+            lst = ServiciosJAguaPotable.obtenerEstadosJuntas();
             for (int i = 0; i < lst.size(); i++) {
-                pieModel.set(String.valueOf(ServiciosJAguaPotable.obtenerjunta_agua_potableEstado().get(i).getEstado())+" ESTADO",
-                        ServiciosJAguaPotable.obtenerjunta_agua_potableEstado(ServiciosJAguaPotable.obtenerjunta_agua_potableEstado().get(i).getEstado()).size());
-
+                pieModel.set(lst.get(i).getEstado(), ServiciosJAguaPotable.obtenerJuntasDadoEstado(lst.get(i).getEstado()).size());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -88,13 +86,4 @@ public class ControladorJAguaPotableEstado {
         this.pieModel = pieModel;
     }
 
-    public ArrayList<Colegiatura> getLst() {
-        return lst;
-    }
-
-    public void setLst(ArrayList<Colegiatura> lst) {
-        this.lst = lst;
-    }
-
 }
-
